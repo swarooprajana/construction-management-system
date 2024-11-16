@@ -1,0 +1,11 @@
+@import './variables';
+@import './layout';
+@import './typography';
+@import './utilities';
+@import './material-overrides';
+@import './flexutilities';
+@import './pages/auth.scss';
+
+mat-card{
+    border-radius: 25px !important;
+}

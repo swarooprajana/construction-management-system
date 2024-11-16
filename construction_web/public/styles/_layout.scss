@@ -1,0 +1,79 @@
+@use 'sass:math';
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Container
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: $breakpoint-sm) {
+    max-width: 540px;
+  }
+  @media (min-width: $breakpoint-md) {
+    max-width: 720px;
+  }
+  @media (min-width: $breakpoint-lg) {
+    max-width: 960px;
+  }
+  @media (min-width: $breakpoint-xl) {
+    max-width: 1140px;
+  }
+}
+
+// Row
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px; // Gutter adjustment
+  margin-left: -15px;
+}
+
+// Columns
+[class*='col-'] {
+  // padding-right: 15px;
+  // padding-left: 15px;
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+// Column Sizes
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    flex: 0 0 #{math.div(100%, 12) * $i};
+    max-width: #{math.div(100%, 12) * $i};
+  }
+
+  @media (min-width: $breakpoint-sm) {
+    .col-sm-#{$i} {
+      flex: 0 0 #{math.div(100%, 12) * $i};
+      max-width: #{math.div(100%, 12) * $i};
+    }
+  }
+  @media (min-width: $breakpoint-md) {
+    .col-md-#{$i} {
+      flex: 0 0 #{math.div(100%, 12) * $i};
+      max-width: #{math.div(100%, 12) * $i};
+    }
+  }
+  @media (min-width: $breakpoint-lg) {
+    .col-lg-#{$i} {
+      flex: 0 0 #{math.div(100%, 12) * $i};
+      max-width: #{math.div(100%, 12) * $i};
+    }
+  }
+  @media (min-width: $breakpoint-xl) {
+    .col-xl-#{$i} {
+      flex: 0 0 #{math.div(100%, 12) * $i};
+      max-width: #{math.div(100%, 12) * $i};
+    }
+  }
+}

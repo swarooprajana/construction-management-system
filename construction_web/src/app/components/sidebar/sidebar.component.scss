@@ -1,0 +1,211 @@
+.sidenav {
+  // position: fixed;
+  // top: 0;
+  left: 0;
+  // height: 100vh;
+  // width: 60px;
+  // background-color: #1a1b1e;
+  // color: white;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // padding: 1rem 0;
+  // box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  // z-index: 1000;
+  // transition: all 0.3s ease;
+  // overflow: hidden;
+  // border-radius: 0 15px 15px 0; // Added border radius to right side
+
+  background: rgb(23, 32, 44);
+  transition: all 0.5s ease;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 5rem;
+  height: 100vh;
+  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  border-radius: 0 20px 20px 0;// Added border radius to right side
+
+  &.expanded {
+    width: 200px;
+
+    .sidenav-nav-link {
+      justify-content: flex-start;
+      padding: 0.75rem 1rem;
+      
+      .link-text {
+        display: inline-block;
+        margin-left: 1rem;
+        opacity: 1;
+      }
+    }
+  }
+
+  .logo-container {
+    margin-bottom: 2rem;
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .scrollwrap {
+    width: 100%;
+    height: calc(100% - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1rem; // Added padding to prevent items touching bottom
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #4a4b4f;
+      border-radius: 3px;
+    }
+
+    // Hide scrollbar for cleaner look but maintain functionality
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sidenav-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    .sidenav-nav-item {
+      width: 100%;
+      padding: 0 0.5rem;
+      
+      .sidenav-nav-link {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        color: #808191;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        padding: 0 0.75rem;
+        padding: 0.5rem;
+
+        i {
+          min-width: 40px;
+          font-size: 20px;
+          text-align: center;
+          line-height: 40px;
+        }
+
+        .link-text {
+          display: none;
+          white-space: nowrap;
+          opacity: 0;
+          transition: all 0.3s ease;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: white;
+        }
+
+        &.active {
+          background-color: #6c5dd3;
+          color: white;
+          box-shadow: 0 2px 5px rgba(108, 93, 211, 0.5);
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 1rem; // Added margin to last item
+      }
+    }
+  }
+}
+
+// Bottom section for settings/profile if needed
+.bottom-section {
+  margin-top: auto;
+  width: 100%;
+  padding: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .sidenav {
+    height: 5rem;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    border-radius: 20px 20px 0 0;
+    flex-direction: row;
+
+    &.expanded {
+      height: 200px;
+      width: 100%;
+    }
+
+    .logo-container {
+      display: none;
+    }
+
+    .sidenav-nav {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      .sidenav-nav-item {
+        flex: 1;
+        padding: 0;
+        height: 100%;
+
+        .sidenav-nav-link {
+          justify-content: center;
+          padding: 0.5rem;
+          height: 100%;
+          flex-direction: column;
+
+          i {
+            font-size: 1.5rem;
+          }
+
+          .link-text {
+            display: block;
+            margin-top: 0.25rem;
+          }
+        }
+      }
+    }
+
+    .scrollwrap {
+      height: auto;
+      overflow: hidden;
+    }
+  }
+}
+
+

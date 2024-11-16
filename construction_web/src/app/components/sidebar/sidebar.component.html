@@ -1,0 +1,31 @@
+<div class="sidenav" 
+     [class.expanded]="collapsed"
+     (mouseenter)="toggleCollapse(true)" 
+     (mouseleave)="toggleCollapse(false)">
+  <div class="logo-container">
+    <img src="/public/favicon.ico" alt="Logo">
+  </div>
+
+    <!-- Navigation items section -->
+    <div class="scrollwrap scrollwrap_delayed">
+      <ul class="sidenav-nav">
+          <!-- Loop through navbarData -->
+          <li class="sidenav-nav-item" *ngFor="let data of navData">
+              <a class="sidenav-nav-link"
+                 [routerLink]="[data.routeLink]"
+                 routerLinkActive="active"
+                 [routerLinkActiveOptions]="{exact: true}"
+                 (click)="handleClick(data)">
+                <ng-container *ngIf="data.imageUrl; else iconTemplate">
+                  <img [src]="data.imageUrl" alt="{{ data.label }}" class="avatar-image m-l-4">
+                </ng-container>
+                <ng-template #iconTemplate>
+                  <i class="material-symbols-outlined">{{data.icon}}</i>
+                </ng-template>
+                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{ data.label }}</span>
+                <i class="fas m-l-10" [ngClass]="data.expanded ? 'fa-chevron-up' : 'fa-chevron-down'" *ngIf="data.children?.length"></i>
+              </a>
+          </li>
+      </ul>
+  </div>
+</div>

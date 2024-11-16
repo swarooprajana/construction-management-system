@@ -1,0 +1,46 @@
+<svg
+  [attr.width]="size"
+  [attr.height]="size"
+  [attr.viewBox]="'0 0 ' + size + ' ' + size"
+  (mouseenter)="hovered = true"
+  (mouseleave)="hovered = false"
+>
+  <!-- Full circle (for remaining percentage) -->
+  <circle
+    cx="50%"
+    cy="50%"
+    [attr.r]="radius"
+    [attr.stroke-width]="strokeWidth"
+    [attr.stroke]="remainingColor"
+    fill="none"
+  ></circle>
+
+  <!-- Progress arc (for filled percentage) -->
+  <circle
+    cx="50%"
+    cy="50%"
+    [attr.r]="radius"
+    [attr.stroke-width]="strokeWidth"
+    [attr.stroke]="progressColor"
+    fill="none"
+    [attr.stroke-dasharray]="circumference"
+    [attr.stroke-dashoffset]="circumference - (circumference * percent / 100)"
+    stroke-linecap="round"
+    [attr.transform]="'rotate(-90 ' + size / 2 + ' ' + size / 2 + ')'"
+  ></circle>
+
+  <!-- Percentage text (visible only on hover) -->
+  <text
+    *ngIf="hovered"
+    x="50%"
+    y="50%"
+    text-anchor="middle"
+    alignment-baseline="middle"
+    [attr.font-size]="size / 4"
+    fill="#000"
+  >
+    {{ percent }}%
+  </text>
+</svg>
+
+  

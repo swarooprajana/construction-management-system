@@ -1,0 +1,13 @@
+// Custom Material button styles
+::ng-deep .mat-button {
+    background-color: $primary-color;
+    color: white;
+    &:hover { background-color: darken($primary-color, 10%); }
+  }
+  
+  // Material input field styles
+  ::ng-deep .mat-form-field {
+    width: 100%;
+    .mat-input-element { color: $text-color; font-size: 1rem; }
+  }
+  

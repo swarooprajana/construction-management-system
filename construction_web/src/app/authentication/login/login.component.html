@@ -1,0 +1,59 @@
+<div >
+    <div class="row m-0 ">
+        <div class="col-md-6  flex-center align-center">
+            <h1>login</h1>
+        </div>
+        <div class="col-md-6 align-end">
+            
+                <mat-card class="login-card boxshadow-form  w-100 flex-center h-100 pl-20">
+                    <h2>Login</h2>
+                    <form [formGroup]="logForm" (ngSubmit)="onSubmit()" >
+                        <div class="row  w-100 ml-0">
+                          <div class="col-md-12 p-20">
+                            <app-inputs
+                            [parentForm]="logForm"
+                            controlName="username"
+                            label="Username"
+                            placeholder="Enter username"
+                            [type]="'email'"
+                            [showBorders]="false"
+                            [icon]="'person'" 
+                            [required]=true
+                            [validationMessages]="{ required: 'Username is required' }"
+                          ></app-inputs>
+                          
+                          </div>
+                      
+                      
+                          <div class="col-md-12 w-100">
+                            <app-inputs
+                            [parentForm]="logForm"
+                            controlName="password"
+                            label="password"
+                            placeholder="password"
+                            [type]="'password'"
+                            [showBorders]="false"
+                            [required]=true
+                            [validationMessages]="{ required: 'Password is required' }"
+                          ></app-inputs>
+                          </div>
+                      </div>
+                      <div class="row w-100 ml-0">
+                        <div class="col-md-12 w-100">
+                          <!-- <button mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid" class="w-100">
+                              Login
+                          </button> -->
+                          <!-- <app-edit-button label="login" type="submit" [buttonColor]="'#8F1402'"  [buttonWidth]="'100%'"></app-edit-button> -->
+                          <div class="col-md-12  ">
+                            <p class="float-right" (click)="forgot()">Forgot Password ?</p>
+                          </div>
+                      </div>
+                      </div>
+                      
+                      
+                    </form>
+                  </mat-card>
+        </div>
+    </div>
+</div>
+
