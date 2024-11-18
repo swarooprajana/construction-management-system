@@ -1,0 +1,12 @@
+<div class="app-container" [class.mobile]="isMobile">
+    <!-- Sidebar component -->
+    <app-sidebar [class.open]="isOpen" (mouseenter)="openSidebar()" (mouseleave)="closeSidebar()"></app-sidebar>
+  
+    <!-- Main content area -->
+    <div class="content" [class.sidebar-open]="isOpen">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+      
+    </div>
+  </div>

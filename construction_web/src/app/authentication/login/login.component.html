@@ -1,13 +1,16 @@
 <div >
     <div class="row m-0 ">
-        <div class="col-md-6  flex-center align-center">
-            <h1>login</h1>
-        </div>
-        <div class="col-md-6 align-end">
+        <div class="col-md-7 ">
+          <div class="login-image w-100 flex-center align-center h-100 ">
+            <!-- <h1>login</h1> -->
+          </div>
             
-                <mat-card class="login-card boxshadow-form  w-100 flex-center h-100 pl-20">
+        </div>
+        <div class="col-md-5 align-end">
+            
+                <div class="login-card  w-100 flex-center h-100 m-0">
                     <h2>Sign In</h2>
-                    <div class="row flex-center">
+                    <div class="row flex-center mt-0 ">
                       <p>Welcome back! Please enter your details</p>
                     </div>
                     <form [formGroup]="logForm" (ngSubmit)="onSubmit()" >
@@ -22,7 +25,9 @@
                             [showBorders]="false"
                             [icon]="'person'" 
                             [required]=true
-                            [validationMessages]="{ required: 'Username is required' }"
+                            [validationMessages]="{ required: 'Username is required',
+                               email: 'Enter a valid email address'
+                             }"
                           ></app-inputs>
                           
                           </div>
@@ -41,21 +46,21 @@
                           ></app-inputs>
                           </div>
                       </div>
-                      <div class="row w-100 ml-0">
-                        <div class="col-md-12 w-100">
+                      <div class="row">
+                        
                           <!-- <button mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid" class="w-100">
                               Login
                           </button> -->
-                          <app-button label="Sign In" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'"></app-button>
-                          <div class="col-md-12  ">
+                          <app-button label="Sign In" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'" class="w-100"></app-button>
+                          <div class="col-md-12">
                             <p class="float-left f-w-900" (click)="forgot()">Forgot Password ?</p>
                           </div>
                       </div>
-                      </div>
+                     
                       
                       
                     </form>
-                  </mat-card>
+                  </div>
         </div>
     </div>
 </div>

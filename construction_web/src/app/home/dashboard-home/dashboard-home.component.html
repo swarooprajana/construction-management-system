@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row" >
+        <div class="col-md-7">
+            <mat-card class="w-100">
+                <custom-table 
+                    [tableData]="orders"
+                        [heading]="'Jobs'"
+                        [tableColumns]="ordersTableColumns"
+                        [isFilterable]="false"
+                        [isPageable]="true"
+                        [showButton]="true"
+                        buttonLabel="Create New Job"
+                        buttonIcon="add"
+                        (buttonClick)="openSchoolForm()"
+                        [showCheckboxes]="false"
+                        [paginationSizes]="[5,10]"
+                        [defaultPageSize]="10"
+                        (sort)="sortData($event)"
+                        (rowAction)="handleRowAction($event)"
+                        (rowClick)="onRowClicked($event)"
+                      class="w-100">
+                      
+                  </custom-table>
+            </mat-card>
+        </div>
+        <div class="col-md-5 float-right">
+            <mat-card>
+                <app-pie-chart class="piechart"
+                [chartData]="[40, 30, 20, 10]"
+                [chartLabels]="['Apples', 'Oranges', 'Bananas', 'Grapes']"
+                [colors]="['#FF6384', '#36A2EB', '#AA8E3C', '#595D5F']">
+              </app-pie-chart>
+            </mat-card>
+        </div>
+    </div>
+</div>

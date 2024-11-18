@@ -1,11 +1,13 @@
 <div >
-    <div class="row m-0 ">
-        <div class="col-md-6  flex-center align-center">
-            <h1>Reset Password</h1>
+    <div class="row m-0">
+        <div class="col-md-7">
+          <div class="login-image w-100 flex-center align-center h-100 ">
+            <!-- <h1>login</h1> -->
+          </div>
         </div>
-        <div class="col-md-6 align-end">
+        <div class="col-md-5">
             
-                <mat-card class="login-card boxshadow-form  w-100 flex-center h-100 pl-20">
+                <div class="login-card w-100 flex-center h-100 m-0">
                     <h2>Reset Password</h2>
                     <div class="row flex-center">
                       <p>Please enter your details</p>
@@ -23,6 +25,7 @@
                             [icon]="'person'" 
                             [required]=true
                             [validationMessages]="{ required: 'Username is required' }"
+                            class="w-100"
                           ></app-inputs>
                           
                           </div>
@@ -46,7 +49,7 @@
                           <!-- <button mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid" class="w-100">
                               Login
                           </button> -->
-                          <app-button label="Reset Password" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'"></app-button>
+                          <app-button label="Reset Password" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'" class="w-100"></app-button>
                           <!-- <div class="col-md-12  ">
                             <p class="float-right">Forgot Password ?</p>
                           </div> -->
@@ -64,7 +67,7 @@
                       
                       
                     </form>
-                  </mat-card>
+                  </div>
         </div>
     </div>
 </div>

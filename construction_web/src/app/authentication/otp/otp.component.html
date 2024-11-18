@@ -1,11 +1,13 @@
 <div >
     <div class="row m-0 ">
-        <div class="col-md-6  flex-center align-center">
-            <h1>login</h1>
+      <div class="col-md-7 ">
+        <div class="login-image w-100 flex-center align-center h-100 ">
+          <!-- <h1>login</h1> -->
         </div>
-        <div class="col-md-6 align-end">
+        </div>
+        <div class="col-md-5 align-end">
             
-                <mat-card class="login-card boxshadow-form w-100 flex-center h-100 pl-20">
+                <div class="login-card  w-100 flex-center h-100 pl-20">
                     <h2>Reset Password</h2>
                     <div class="row flex-center">
                       <p>We’ve sent a 4 digit OTP to your email</p>
@@ -39,16 +41,16 @@
                             {{ invalidDetailsMessage }}
                           </div> -->
                           
-                            <div class="row flex-center w-100">
+                            <div class="row flex-center w-100 m-2">
                               <app-button label="Continue" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'" class="w-100"></app-button>
-                            </div>
-                            <div class="row flex-center w-100">
+                            </div> 
+                            <div class="row flex-center w-100 m-2">
                               <app-button label="Back" type="button" [textColor]="'#000'" [buttonColor]="'#fff'"  [buttonWidth]="'100%'" class="w-100"></app-button>
                             </div>
                           
                           <!-- <app-button label="Submit" type="submit"></app-button> -->
                         </form>
-                  </mat-card>
+                      </div>
         </div>
     </div>
 </div>

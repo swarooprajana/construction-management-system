@@ -22,12 +22,25 @@ export class InputsComponent {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.required) {
-      const control = this.parentForm.get(this.controlName);
-      if (control) {
-        control.setValidators([Validators.required, Validators.minLength(this.minLength)]);
-        control.updateValueAndValidity();
+    const control = this.parentForm.get(this.controlName);
+  
+    if (control) {
+      const validators = [];
+  
+      if (this.required) {
+        validators.push(Validators.required);
       }
+  
+      if (this.type === 'email') {
+        validators.push(Validators.email);
+      }
+  
+      if (this.minLength > 0) {
+        validators.push(Validators.minLength(this.minLength));
+      }
+  
+      control.setValidators(validators);
+      control.updateValueAndValidity();
     }
   }
 
@@ -40,9 +53,14 @@ export class InputsComponent {
     const control = this.parentForm.get(this.controlName);
     if (control && control.errors) {
       if (control.errors['required']) {
-        return this.validationMessages['required'] || 'Required';
+        return this.validationMessages['required'] || 'This field is required.';
+      } else if (control.errors['email']) {
+        return this.validationMessages['email'] || 'Please enter a valid email address.';
       } else if (control.errors['minlength']) {
-        return this.validationMessages['minlength'] || `Minimum length should be ${this.minLength}`;
+        return (
+          this.validationMessages['minlength'] ||
+          `Minimum length should be ${this.minLength}.`
+        );
       }
     }
     return '';
