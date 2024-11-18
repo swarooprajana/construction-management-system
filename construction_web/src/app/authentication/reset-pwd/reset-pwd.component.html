@@ -6,7 +6,10 @@
         <div class="col-md-6 align-end">
             
                 <mat-card class="login-card boxshadow-form  w-100 flex-center h-100 pl-20">
-                    <h2>Password Reset</h2>
+                    <h2>Reset Password</h2>
+                    <div class="row flex-center">
+                      <p>Please enter your details</p>
+                    </div>
                     <form [formGroup]="logForm" (ngSubmit)="onSubmit()" >
                         <div class="row  w-100 ml-0">
                           <div class="col-md-12 p-20">
@@ -43,11 +46,20 @@
                           <!-- <button mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid" class="w-100">
                               Login
                           </button> -->
-                          <!-- <app-edit-button label="Send Otp" type="submit" [buttonColor]="'#8F1402'"  [buttonWidth]="'100%'"></app-edit-button> -->
+                          <app-button label="Reset Password" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'"></app-button>
                           <!-- <div class="col-md-12  ">
                             <p class="float-right">Forgot Password ?</p>
                           </div> -->
                       </div>
+                      <div class="col-md-12 w-100">
+                        <!-- <button mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid" class="w-100">
+                            Login
+                        </button> -->
+                        <app-button label="Back" type="button" [textColor]="'#000'" [buttonColor]="'#fff'"  [buttonWidth]="'100%'"></app-button>
+                        <!-- <div class="col-md-12  ">
+                          <p class="float-right">Forgot Password ?</p>
+                        </div> -->
+                    </div>
                       </div>
                       
                       

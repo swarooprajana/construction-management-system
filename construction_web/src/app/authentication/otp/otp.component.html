@@ -6,7 +6,13 @@
         <div class="col-md-6 align-end">
             
                 <mat-card class="login-card boxshadow-form w-100 flex-center h-100 pl-20">
-                    <h2>OTP sent</h2>
+                    <h2>Reset Password</h2>
+                    <div class="row flex-center">
+                      <p>We’ve sent a 4 digit OTP to your email</p>
+                    </div>
+                    <div class="row flex-center">
+                      <p class="f-w-900">Timothy.Mitchellgmail.com</p>
+                    </div>
                     <form (ngSubmit)="otpSubmit()">
                         <!--Mobile icon comes here-->
                         <p class="textcenter">
@@ -16,8 +22,7 @@
                         <!--Login Form Starts here-->
                         <!-- <app-error class="text-center f-w-400 f-s-14" [errorMessage]="invalidOtp"></app-error> -->
           
-                          <h4 class="textcenter">Enter 4 Digits Code</h4>
-                          <div class="textcenter f-w-400 f-s-14">Enter the 4 digits code that was sent to your mail for verification</div>
+                          
                           <div class="otp-input m-t-40 d-flex otpboxes">
                             <input #input1 type="text" maxlength="1" [(ngModel)]="otpValue[0]" (input)="onOtpInputChange(0, input2, null)" (keydown)="onKeyDown($event, null, input2)" [ngModelOptions]="{ standalone: true }" autofocus  />
                             <input #input2 type="text" maxlength="1" [(ngModel)]="otpValue[1]" (input)="onOtpInputChange(1, input3, input1)" (keydown)="onKeyDown($event, input1, input3)" [ngModelOptions]="{ standalone: true }"  />
@@ -33,9 +38,14 @@
                           <!-- <div class="text-center text-danger m-b-10" *ngIf="invalidDetailsMessage" style="color: red;">
                             {{ invalidDetailsMessage }}
                           </div> -->
-                          <mat-card-actions class="flex-center">
-                            <button mat-raised-button class="p-l-42 p-r-42 w-50" style="background-color:rgba(143, 20, 2, 1)!important;color: white;" type="submit">Submit</button>
-                          </mat-card-actions>
+                          
+                            <div class="row flex-center w-100">
+                              <app-button label="Continue" type="submit" [textColor]="'#fff'" [buttonColor]="'#000000'"  [buttonWidth]="'100%'" class="w-100"></app-button>
+                            </div>
+                            <div class="row flex-center w-100">
+                              <app-button label="Back" type="button" [textColor]="'#000'" [buttonColor]="'#fff'"  [buttonWidth]="'100%'" class="w-100"></app-button>
+                            </div>
+                          
                           <!-- <app-button label="Submit" type="submit"></app-button> -->
                         </form>
                   </mat-card>
