@@ -37,8 +37,8 @@ export class LoginComponent {
   onSubmit() {
     if (this.logForm.valid) {
     const formData = {
-      Email: this.logForm.value.username,
-      Password: this.logForm.value.password,
+      email: this.logForm.value.username,
+      password: this.logForm.value.password,
       // Type: this.logForm.value.type
     };
 

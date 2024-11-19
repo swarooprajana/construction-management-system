@@ -9,6 +9,7 @@ import { AllJobsComponent } from './home/all-jobs/all-jobs.component';
 import { AddJobComponent } from './home/add-job/add-job.component';
 import { JobDetailsComponent } from './home/job-details/job-details.component';
 import { CalenderComponent } from './home/calender/calender.component';
+import { CrewComponent } from './home/crew/crew.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'alljobs', component: AllJobsComponent },
       { path: 'addjobs', component: AddJobComponent },
       {path:"calender",component:CalenderComponent},
-      {path:"jobdetails",component:JobDetailsComponent}
+      {path:"jobdetails",component:JobDetailsComponent},
+      {path:"crew",component:CrewComponent}
       // Add more child routes as needed
     ]
   },

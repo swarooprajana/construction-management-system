@@ -13,7 +13,7 @@ th, td {
 }
 
 .mat-header-cell{
-  color: #8F1402 !important;
+  color: #fff !important;
 }
 
 mat-form-field {
@@ -25,7 +25,7 @@ mat-form-field {
 }
 
 .color-red {
-  background-color:  rgba(255, 232, 228, 1) !important;
+  background-color:  #fff !important;
   ;
 }
 .even-row {
@@ -53,10 +53,10 @@ th{
   box-shadow: 0px 1px 3px 0px #000000;
 }
 
-div.vertical-line {
-  height: 40px;
-  margin: 10px;
-}
+// div.vertical-line {
+//   height: 40px;
+//   margin: 10px;
+// }
 
 div.vertical-line.left {
     border-left: 1px solid rgba(207, 207, 207, 1);

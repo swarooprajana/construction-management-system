@@ -16,11 +16,11 @@
   // overflow: hidden;
   // border-radius: 0 15px 15px 0; // Added border radius to right side
 
-  background: rgb(23, 32, 44);
+  background: #fff;
   transition: all 0.5s ease;
   position: fixed;
   z-index: 1;
-  top: 0;
+  bottom: 0;
   width: 5rem;
   height: 100vh;
   box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
@@ -126,11 +126,11 @@
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
-          color: white;
+          color: #000;
         }
 
         &.active {
-          background-color: #6c5dd3;
+          background-color: #000;
           color: white;
           box-shadow: 0 2px 5px rgba(108, 93, 211, 0.5);
         }

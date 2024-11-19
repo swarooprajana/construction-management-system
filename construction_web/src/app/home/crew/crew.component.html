@@ -1,1 +1,25 @@
-<p>crew works!</p>
+<div class="row">
+    <div class="col-md-12 m-10">
+        <mat-card>
+            <custom-table 
+                    [tableData]="orders"
+                        [heading]="'My Crew'"
+                        [tableColumns]="ordersTableColumns"
+                        [isFilterable]="false"
+                        [isPageable]="true"
+                        [showButton]="true"
+                        buttonLabel="Add new Members"
+                        buttonIcon="add"
+                        (buttonClick)="openSchoolForm()"
+                        [showCheckboxes]="false" 
+                        [paginationSizes]="[5,10]"
+                        [defaultPageSize]="10"
+                        (sort)="sortData($event)"
+                        (rowAction)="handleRowAction($event)"
+                        (rowClick)="onRowClicked($event)"
+                      class="w-100">
+                      
+                  </custom-table>
+        </mat-card>
+    </div>
+</div>

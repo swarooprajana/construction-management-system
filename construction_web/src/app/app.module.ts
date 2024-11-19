@@ -38,6 +38,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HeadingComponent } from './components/heading/heading.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { HeadingComponent } from './components/heading/heading.component';
     CalenderComponent,
     TableComponent,
     DataPropertyGetterPipe,
-    HeadingComponent
+    HeadingComponent,
+    HeaderComponent
     
   ],
   imports: [
