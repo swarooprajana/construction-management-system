@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="mat-header">
+    <!-- Logo/Image -->
+    <div class="header-logo" *ngIf="showImage">
+      <img [src]="imageUrl" alt="Logo" />
+    </div>
+  
+    <!-- Spacer -->
+    <span class="spacer"></span>
+  
+    <!-- Search Bar -->
+    <mat-form-field appearance="outline" class="header-search" *ngIf="showSearch" style="margin-top: 20px;">
+      <mat-label>Search for Anything</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Type to search..."
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  
+    <!-- Notifications -->
+    <button
+      mat-icon-button
+      class="header-notification"
+      *ngIf="showNotifications"
+      (click)="onNotificationClick()"
+    >
+      <mat-icon>notifications</mat-icon>
+      <span class="notification-badge" *ngIf="notificationCount > 0">
+        {{ notificationCount }}
+      </span>
+    </button>
+  </mat-toolbar>
+  

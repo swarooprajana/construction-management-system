@@ -1,0 +1,37 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .layout {
+    display: flex;
+    flex: 1;
+    margin-top: 64px; // Adjust based on your header height (default for mat-toolbar is 64px)
+    height: calc(100vh - 64px); // Fill the remaining viewport height
+    overflow: hidden;
+  }
+
+  .content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+
+    &.sidebar-open {
+      margin-left: 240px; // Adjust based on your sidebar width
+      transition: margin-left 0.3s;
+    }
+
+    &.sidebar-closed {
+      margin-left: 60px; // Adjust based on your closed sidebar width
+      transition: margin-left 0.3s;
+    }
+  }
+}

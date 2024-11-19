@@ -34,9 +34,9 @@ export const navbarData: INavbarData[] = [
       routeLink: '/settings' 
     },
     { 
-      label: 'Settings', 
+      label: 'My Crew', 
       icon: 'people', 
-      routeLink: '/settings' 
+      routeLink: 'crew' 
     }
 
 ];

@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="row m-10" >
+        <div class="col-md-7">
+            <mat-card class="w-100 p-10">
+                <custom-table 
+                    [tableData]="orders"
+                        [heading]="'Jobs'"
+                        [tableColumns]="ordersTableColumns"
+                        [isFilterable]="false"
+                        [isPageable]="true"
+                        [showButton]="true"
+                        buttonLabel="Create New Job"
+                        buttonIcon="add"
+                        (buttonClick)="openSchoolForm()"
+                        [showCheckboxes]="false"
+                        [paginationSizes]="[5,10]"
+                        [defaultPageSize]="10"
+                        (sort)="sortData($event)"
+                        (rowAction)="handleRowAction($event)"
+                        (rowClick)="onRowClicked($event)"
+                      class="w-100">
+                      
+                  </custom-table>
+            </mat-card>
+        </div>
+        <div class="col-md-5 float-right">
+            <mat-card class="ml-10 mt-sm-15">
+            <div class="row">
+                <div class="col-md-6 pl-32">
+                    <app-heading [heading]="'Project Insights'"></app-heading>
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                <app-pie-chart
+                    [chartData]="[30, 40, 30]"
+                    [chartLabels]="['Label A', 'Label B', 'Label C']"
+                    [colors]="['#FF5733', '#33FF57', '#3357FF']"
+                    [chartWidth]="'300px'"
+                    [chartHeight]="'300px'">
+                </app-pie-chart>
+            </mat-card>    
+        </div>
+    
+    </div>
+    <div class="row m-10">
+        <div class="col-md-7">
+            <mat-card class="w-100">
+                <custom-table 
+                    [tableData]="orders"
+                        [heading]="'Dailies History'"
+                        [tableColumns]="ordersTableColumns"
+                        [isFilterable]="false"
+                        [isPageable]="true"
+                        [showButton]="false"
+                        buttonLabel="Add new Members"
+                        buttonIcon="add"
+                        (buttonClick)="openSchoolForm()"
+                        [showCheckboxes]="false"
+                        [paginationSizes]="[5,10]"
+                        [defaultPageSize]="10"
+                        (sort)="sortData($event)"
+                        (rowAction)="handleRowAction($event)"
+                        (rowClick)="onRowClicked($event)"
+                      class="w-100">
+                      
+                  </custom-table>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row m-10">
+        
+            
+                <mat-card class="w-100">
+                    <custom-table 
+                        [tableData]="orders"
+                            [heading]="'My Crew'"
+                            [tableColumns]="ordersTableColumns"
+                            [isFilterable]="false"
+                            [isPageable]="true"
+                            [showButton]="true"
+                            buttonLabel="Add new Members"
+                            buttonIcon="add"
+                            (buttonClick)="openSchoolForm()"
+                            [showCheckboxes]="false"
+                            [paginationSizes]="[5,10]"
+                            [defaultPageSize]="10"
+                            (sort)="sortData($event)"
+                            (rowAction)="handleRowAction($event)"
+                            (rowClick)="onRowClicked($event)"
+                          class="w-100">
+                          
+                      </custom-table>
+                </mat-card>
+            
+        
+    </div>
+ </div>   
