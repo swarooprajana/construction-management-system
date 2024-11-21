@@ -10,6 +10,8 @@ import { AddJobComponent } from './home/add-job/add-job.component';
 import { JobDetailsComponent } from './home/job-details/job-details.component';
 import { CalenderComponent } from './home/calender/calender.component';
 import { CrewComponent } from './home/crew/crew.component';
+import { NewRoleComponent } from './home/new-role/new-role.component';
+import { DialiesLogComponent } from './home/dialies-log/dialies-log.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -25,7 +27,9 @@ const routes: Routes = [
       { path: 'addjobs', component: AddJobComponent },
       {path:"calender",component:CalenderComponent},
       {path:"jobdetails",component:JobDetailsComponent},
-      {path:"crew",component:CrewComponent}
+      {path:"crew",component:CrewComponent},
+      {path:"New Role",component:NewRoleComponent},
+      {path:"dialies log",component:DialiesLogComponent}
       // Add more child routes as needed
     ]
   },

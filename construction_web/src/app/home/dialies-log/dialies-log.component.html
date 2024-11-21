@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-8">
+        <mat-card class="w-100 p-10 mr-10 sm-mr-0">
+            <custom-table 
+                [tableData]="orders"
+                    [heading]="'Dialies History'"
+                    [tableColumns]="ordersTableColumns"
+                    [isFilterable]="false"
+                    [isPageable]="true"
+                    [showButton]="false"
+                    buttonLabel="Create New Job"
+                    buttonIcon="add"
+                    (buttonClick)="openSchoolForm()"
+                    [showCheckboxes]="false"
+                    [paginationSizes]="[5,10]"
+                    [defaultPageSize]="10"
+                    (sort)="sortData($event)"
+                    (rowAction)="handleRowAction($event)"
+                    (rowClick)="onRowClicked($event)"
+                  class="w-100">
+                  
+              </custom-table>
+        </mat-card>
+    </div>
+    <div class="col-md-4">
+        <mat-card class="flex-center p-32 ml-15 sm-mr-0">
+            <app-pie-chart
+            [chartData]="[30, 40, 30]"
+            [chartLabels]="['completed', 'On Hold', 'On Progress']"
+            [colors]="['#0F0F10', '#595d5f', '#3357FF']"
+            [chartWidth]="'300px'"
+            [chartHeight]="'300px'">
+        </app-pie-chart>
+        </mat-card>
+       
+    </div>
+</div>

@@ -39,6 +39,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HeadingComponent } from './components/heading/heading.component';
 import { HeaderComponent } from './components/header/header.component';
+import { NewRoleComponent } from './home/new-role/new-role.component';
+import { ListComponent } from './components/list/list.component';
+import { DialiesLogComponent } from './home/dialies-log/dialies-log.component';
+import { EditJobComponent } from './popups/edit-job/edit-job.component';
+import { CreateJobComponent } from './popups/create-job/create-job.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +70,12 @@ import { HeaderComponent } from './components/header/header.component';
     TableComponent,
     DataPropertyGetterPipe,
     HeadingComponent,
-    HeaderComponent
+    HeaderComponent,
+    NewRoleComponent,
+    ListComponent,
+    DialiesLogComponent,
+    EditJobComponent,
+    CreateJobComponent
     
   ],
   imports: [

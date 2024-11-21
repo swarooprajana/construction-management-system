@@ -2,21 +2,27 @@ import { INavbarData } from "./helper";
 
 export const navbarData: INavbarData[] = [
 
-    {
-      label:"Profile",
-      icon:"Person",
-      routeLink:"/Profile"
-    },
+  {
+    label: 'DashBoard', 
+    icon: 'dashboard', 
+    routeLink:"/dashboard"
+  },
 
-    {
-      label: 'DashBoard', 
-      icon: 'dashboard', 
-      routeLink:"/dashboard"
-    },
+    
     { 
       label: 'All Jobs',
        icon: 'work', 
        routeLink: 'alljobs' 
+    },
+    { 
+      label: 'My Crew', 
+      icon: 'people', 
+      routeLink: 'crew' 
+    },
+    { 
+      label: 'Dailies History', 
+      icon: 'history', 
+      routeLink: 'dialies log' 
     },
     { 
       label: 'Calender', 
@@ -24,19 +30,11 @@ export const navbarData: INavbarData[] = [
       routeLink: "calender" 
     },
     { 
-      label: 'Add', 
+      label: 'New Role', 
       icon: 'add_circle_outline',
-       routeLink: 'addjobs' 
+       routeLink: 'New Role' 
     },
-    { 
-      label: 'Settings', 
-      icon: 'history', 
-      routeLink: '/settings' 
-    },
-    { 
-      label: 'My Crew', 
-      icon: 'people', 
-      routeLink: 'crew' 
-    }
+    
+    
 
 ];

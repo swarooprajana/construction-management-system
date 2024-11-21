@@ -1,0 +1,84 @@
+<div class="row m-0">
+    <div class="col-md-10 d-flex justify-content-center">
+       <h2 mat-dialog-title class="f-s-30 f-w-900">New Job</h2>
+    </div>
+</div>
+<mat-dialog-content>
+    <div class="row p-50">
+        <form [formGroup]="logForm" (ngSubmit)="onSubmit()"> </form>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Customer  :</label>
+                </div>
+                <div class="col-md-6">
+                    
+                        <app-inputs
+                        [parentForm]="logForm"
+                        controlName="customer"
+                        label="customer"
+                        placeholder="Enter customer Name"
+                        [type]="'text'"
+                        [showBorders]="false"
+                        [icon]="''" 
+                        [required]=true
+                        [validationMessages]="{ required: 'customer Name is required', 
+                         }"
+                      ></app-inputs>
+                      
+                      
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Supervisor :</label>
+                </div>
+                <div class="col-md-6">
+                    Pablo Schuppe
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>From --</label>
+                </div>
+                <div class="col-md-6">
+                    10/11/2022
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>To --</label>
+                </div>
+                <div class="col-md-6">
+                    10/11/2022
+                </div>
+            </div>
+          </div>
+        <div class="col-md-6">
+
+            <app-circular-progression
+            [percent]="70"
+            [size]="150"
+            [strokeWidth]="20"
+            progressColor="#4CAF50"
+            remainingColor="#D3D3D3"
+            class="ml-32"
+          ></app-circular-progression>
+          
+          
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            
+            
+            
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <!-- <app-button [label]="" [buttonColor]="'#8F1402'" type="submit" [buttonWidth]="'50%'" class="w-100 next" (click)="buttonClickFunction?.()"></app-button> -->
+</mat-dialog-actions>

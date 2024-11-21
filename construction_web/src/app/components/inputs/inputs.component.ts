@@ -11,7 +11,7 @@ export class InputsComponent {
   @Input() parentForm!: FormGroup;
   @Input() controlName!: string;
   @Input() label: string = '';
-  @Input() type: string = '';
+  @Input() type: string = 'password';
   @Input() placeholder: string = '';
   @Input() minLength: number = 0;
   @Input() validationMessages: { [key: string]: string } = {};
@@ -65,7 +65,7 @@ export class InputsComponent {
     }
     return '';
   }
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
     this.type = this.showPassword ? 'text' : 'password';
   }
