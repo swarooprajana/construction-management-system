@@ -1,0 +1,22 @@
+<div class="chips-container">
+    
+    
+    <!-- Dropdown or button to add chips -->
+    <div class="add-chip">
+      <button mat-raised-button [matMenuTriggerFor]="chipMenu">{{ placeholder }}</button>
+      <mat-menu #chipMenu="matMenu">
+        <button mat-menu-item *ngFor="let option of options" (click)="addChip(option)">
+          {{ option }}
+        </button>
+      </mat-menu>
+    </div>
+  
+    <!-- Display selected chips -->
+    <div class="chip-list">
+      <div class="chip" *ngFor="let chip of chips; let i = index">
+        <span>{{ chip }}</span>
+        <button class="remove-chip" (click)="removeChip(i)">X</button>
+      </div>
+    </div>
+  </div>
+  

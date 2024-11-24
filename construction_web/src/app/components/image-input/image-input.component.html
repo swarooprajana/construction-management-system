@@ -1,0 +1,18 @@
+<div class="file-upload-container">
+    <div class="image-placeholder" (click)="fileInput.click()">
+      <img *ngIf="filePreview; else placeholder" [src]="filePreview" alt="Image preview" />
+      <ng-template #placeholder>
+        <img src="../../../../public/images/auth/createjob.png" alt="Placeholder Image" />
+      </ng-template>
+    </div>
+  
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileSelected($event)"
+      [accept]="acceptedFileTypes"
+      style="display: none;"
+    />
+    <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
+  </div>
+  

@@ -8,6 +8,7 @@ import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
+import { CrewDetailsComponent } from './crew-details/crew-details.component';
 @Component({
   selector: 'app-crew',
   templateUrl: './crew.component.html',
@@ -101,7 +102,7 @@ export class CrewComponent {
   
   onRowClicked(rowData: any) {
     console.log("Row data:", rowData);
-    const dialogRef =this.dialog.open(EditJobComponent,{
+    const dialogRef =this.dialog.open(CrewDetailsComponent,{
           data:{
             title:"Alert",
             message:"Are you sure want to Delete ?",

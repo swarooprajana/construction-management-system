@@ -44,6 +44,14 @@ import { ListComponent } from './components/list/list.component';
 import { DialiesLogComponent } from './home/dialies-log/dialies-log.component';
 import { EditJobComponent } from './popups/edit-job/edit-job.component';
 import { CreateJobComponent } from './popups/create-job/create-job.component';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { CustomDateAdapter } from '../custom-date-adapter';
+import { CUSTOM_DATE_FORMATS } from '../custom-date-format';
+import { MultipleUploadComponent } from './components/multiple-upload/multiple-upload.component';
+import { ChipsComponent } from './components/chips/chips.component';
+import { CrewDetailsComponent } from './home/crew/crew-details/crew-details.component';
+import { ImageInputComponent } from './components/image-input/image-input.component';
+
 
 @NgModule({
   declarations: [
@@ -75,8 +83,12 @@ import { CreateJobComponent } from './popups/create-job/create-job.component';
     ListComponent,
     DialiesLogComponent,
     EditJobComponent,
-    CreateJobComponent
-    
+    CreateJobComponent,
+    MultipleUploadComponent,
+    ChipsComponent,
+    CrewDetailsComponent,
+    ImageInputComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -95,9 +107,12 @@ MatCheckboxModule,
 MatMenuModule,
 MatInputModule,
 MatFormFieldModule,
+
     
   ],
   providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

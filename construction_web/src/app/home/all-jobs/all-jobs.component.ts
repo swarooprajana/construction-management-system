@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 
 @Component({
   selector: 'app-all-jobs',
@@ -100,10 +101,20 @@ export class AllJobsComponent {
 
   
   onRowClicked(rowData: any) {
-    console.log("Row data:", rowData);
-
-    // this.enterprisegroup();
-    this.routes.navigate(['/School-Profile'],{ state: { data: rowData } });
+    const dialogRef =this.dialog.open(EditJobComponent,{
+      data:{
+        title:"Alert",
+        message:"Are you sure want to Delete ?",
+        buttonLabel:"Delete"
+      },
+      width: '80%', // Set the width of the dialog
+      // Set the height of the dialog
+    }
+    
+  )
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
   openSchoolForm(){
     this.routes.navigate(['/school-add']);

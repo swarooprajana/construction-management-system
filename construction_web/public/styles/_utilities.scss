@@ -50,3 +50,13 @@ $breakpoint-sm: 576px; // Example for responsive design
 .textcenter {
   text-align: center;
 }
+@for $i from 0 through 50 {
+  .gap-#{$i} { gap: $spacing-unit * $i !important; }
+}
+
+// Responsive Gap Utilities
+@media (max-width: $breakpoint-sm) {
+  @for $i from 0 through 50 {
+    .gap-sm-#{$i} { gap: $spacing-unit * $i !important; }
+  }
+}

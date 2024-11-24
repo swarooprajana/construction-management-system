@@ -1,84 +1,134 @@
-<div class="row m-0">
+<div>
     <div class="col-md-10 d-flex justify-content-center">
        <h2 mat-dialog-title class="f-s-30 f-w-900">New Job</h2>
     </div>
 </div>
 <mat-dialog-content>
-    <div class="row p-50">
+    <div class="row ml-0 mr-0">
         <form [formGroup]="logForm" (ngSubmit)="onSubmit()"> </form>
         <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Customer  :</label>
+            <div class="row ml-0 mr-0">
+                <div class="col-md-12">
+                    <label>Work order ID:</label>
                 </div>
-                <div class="col-md-6">
-                    
-                        <app-inputs
+                <div class="col-md-12">                   
+                    <app-inputs
                         [parentForm]="logForm"
-                        controlName="customer"
-                        label="customer"
-                        placeholder="Enter customer Name"
+                        controlName="workOrderName"
+                        label="Work order ID"
+                        placeholder="Work order ID"
                         [type]="'text'"
                         [showBorders]="false"
                         [icon]="''" 
                         [required]=true
-                        [validationMessages]="{ required: 'customer Name is required', 
+                        [validationMessages]="{ required: 'Work order ID is required', 
                          }"
-                      ></app-inputs>
-                      
-                      
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Supervisor :</label>
-                </div>
-                <div class="col-md-6">
-                    Pablo Schuppe
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>From --</label>
-                </div>
-                <div class="col-md-6">
-                    10/11/2022
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>To --</label>
-                </div>
-                <div class="col-md-6">
-                    10/11/2022
-                </div>
-            </div>
-          </div>
-        <div class="col-md-6">
-
-            <app-circular-progression
-            [percent]="70"
-            [size]="150"
-            [strokeWidth]="20"
-            progressColor="#4CAF50"
-            remainingColor="#D3D3D3"
-            class="ml-32"
-          ></app-circular-progression>
-          
-          
+                         
+                ></app-inputs>                                            
+                </div>                
+            </div>            
         </div>
+        <div class="col-md-6">
+            <div class="row ml-0 mr-0">
+                <div class="col-md-12">
+                    <label>Work Type:</label>
+                </div>
+                <div class="col-md-12">                   
+                    <app-inputs
+                        [parentForm]="logForm"
+                        controlName="workType"
+                        label="Work Type"
+                        placeholder="Work Type"
+                        [type]="'text'"
+                        [showBorders]="false"
+                        [icon]="''" 
+                        [required]=true
+                        [validationMessages]="{ required: 'Work Type is required', 
+                         }"
+                ></app-inputs>                                            
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <label>Start Date :</label>
+            </div>
+            <div class="col-md-12">
+                
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="startPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="dateOfBirth">
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker ></mat-datepicker>
+                </mat-form-field>      
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <label>End Date:</label>
+            </div>
+            <div class="col-md-12">
+                
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="EndPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="EndPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #EndPicker ></mat-datepicker>
+                </mat-form-field>      
+            </div>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea
+                  matInput
+                  formControlName="description"
+                  rows="4"
+                  placeholder="Enter your description"
+                ></textarea>
+                <mat-error *ngIf="logForm.controls['description'].hasError('required')">
+                  Description is required
+                </mat-error>
+                <mat-error *ngIf="logForm.controls['description'].hasError('minlength')">
+                  Description must be at least 10 characters
+                </mat-error>
+                <mat-error *ngIf="logForm.controls['description'].hasError('maxlength')">
+                  Description must not exceed 500 characters
+                </mat-error>
+              </mat-form-field> 
+        </div>
+        
+        
     </div>
     <div class="row">
-        <div class="col-md-6">
-
+        <div class="col-md-12">
+            <app-multiple-upload
+            [maxFiles]="5"
+            [maxFileSize]="10000000" 
+            (filesChanged)="onFilesUploaded($event)"
+            (errorMessageChanged)="handleError($event)">
+            </app-multiple-upload>
         </div>
-        <div class="col-md-6">
-            
+        <div class="col-md-12">
+            <div class="row m-0">
+                <label>Todays crew</label>
+            </div>
+            <app-chips
+                [chips]="selectedCrew"
+                [options]="crewOptions"
+                placeholder="Select Crew"
+                (chipsChange)="updateCrew($event)">
+            </app-chips>
             
             
         </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <!-- <app-button [label]="" [buttonColor]="'#8F1402'" type="submit" [buttonWidth]="'50%'" class="w-100 next" (click)="buttonClickFunction?.()"></app-button> -->
+    <div class="row ml-0 mr-0 w-100">
+        <div class="col-md-6">
+            <app-button [label]="'Create JOb'"[textColor]="'#fff'"[buttonColor]="'#000'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
+        </div>
+        <div class="col-md-6">
+            <app-button [label]="'Cancel'" [textColor]="'#000'" [buttonColor]="'#ffff'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
+        </div>
+    </div>
 </mat-dialog-actions>
