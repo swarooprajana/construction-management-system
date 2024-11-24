@@ -12,12 +12,16 @@ import { CalenderComponent } from './home/calender/calender.component';
 import { CrewComponent } from './home/crew/crew.component';
 import { NewRoleComponent } from './home/new-role/new-role.component';
 import { DialiesLogComponent } from './home/dialies-log/dialies-log.component';
+import { ProfileComponent } from './home/profile/profile.component';
+import { NewPasswordComponent } from './authentication/new-password/new-password.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
   {path:"",pathMatch:"full",redirectTo:"login"},
   {path:"otp",component:OtpComponent},
   {path:"resetpassword",component:ResetPwdComponent},
+  {path:"newpassword",component:NewPasswordComponent},
+
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -29,7 +33,8 @@ const routes: Routes = [
       {path:"jobdetails",component:JobDetailsComponent},
       {path:"crew",component:CrewComponent},
       {path:"New Role",component:NewRoleComponent},
-      {path:"dialies log",component:DialiesLogComponent}
+      {path:"dialies log",component:DialiesLogComponent},
+      {path:"profile",component:ProfileComponent}
       // Add more child routes as needed
     ]
   },

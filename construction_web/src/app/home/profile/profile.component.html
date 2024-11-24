@@ -1,1 +1,65 @@
-<p>profile works!</p>
+<div class="row flex-center mt-40">
+    <form [formGroup]="logForm" (ngSubmit)="onSubmit()" class="w-75">
+        <div class="col-md-12 flex-center">
+            <div class="image-upload-container">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="digitalSignInput"
+                  name="Upload_Your_Sign"
+                  (change)="handleFileSelected($event)"
+                  style="display: none;"
+                  #fileInput
+                />
+                <label for="digitalSignInput" class="image-box">
+                  <img *ngIf="uploadFileUrl" [src]="uploadFileUrl" alt="Uploaded School Logo" class="preview-image" />
+                  <div *ngIf="!uploadFileUrl" class="box-text">
+                    <img src="../../assets/images/svgs/imageinsidesgets.svg" alt="Upload Icon" class="upload-icon" />
+                  </div>
+                </label>
+            </div>    
+        </div>
+        <div class="col-md-12 mt-50 w-100">
+            <label>Name</label>
+            <app-inputs
+            [parentForm]="logForm"
+            controlName="name"
+            label=""
+            placeholder=""
+            [type]="'text'"
+            [showBorders]="false"
+            [icon]="''" 
+            [required]=true
+            [validationMessages]="{ required: 'Name is required', 
+             }"
+             class="w-100"
+             
+    ></app-inputs>
+        </div>
+        <div class="col-md-12 mt-20 w-100">
+            <label>Designation</label>
+            <app-inputs
+            [parentForm]="logForm"
+            controlName="designation"
+            label=""
+            placeholder=""
+            [type]="'text'"
+            [showBorders]="false"
+            [icon]="''" 
+            [required]=true
+            [validationMessages]="{ required: 'Designation is required', 
+             }"
+             class="w-100"
+             
+    ></app-inputs>
+        </div>
+        <div class="row flex-center ml-5 mt-50 mr-0">
+            <div class="col-md-6 w-100 ">
+                <app-button [label]="'Create JOb'"[textColor]="'#fff'"[buttonColor]="'#000'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
+            </div>
+            <div class="col-md-6">
+                <app-button [label]="'Cancel'" [textColor]="'#000'" [buttonColor]="'#ffff'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
+            </div>
+        </div>
+    </form>
+</div>

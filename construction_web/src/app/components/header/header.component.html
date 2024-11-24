@@ -1,35 +1,43 @@
 <mat-toolbar color="primary" class="mat-header">
-    <!-- Logo/Image -->
-    <div class="header-logo" *ngIf="showImage">
-      <img [src]="imageUrl" alt="Logo" />
+    <!-- Show "Profile" text if the route matches -->
+    <div *ngIf="isProfileRoute; else defaultHeader">
+      <span>Profile</span>
     </div>
   
-    <!-- Spacer -->
-    <span class="spacer"></span>
+    <!-- Default Header -->
+    <ng-template #defaultHeader>
+      <!-- Logo/Image -->
+      <div class="header-logo" *ngIf="showImage">
+        <img [src]="imageUrl" alt="Logo" />
+      </div>
   
-    <!-- Search Bar -->
-    <mat-form-field appearance="outline" class="header-search" *ngIf="showSearch" style="margin-top: 20px;">
-      <mat-label>Search for Anything</mat-label>
-      <input
-        matInput
-        [(ngModel)]="searchQuery"
-        (input)="onSearch()"
-        placeholder="Type to search..."
-      />
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+      <!-- Spacer -->
+      <span class="spacer"></span>
   
-    <!-- Notifications -->
-    <button
-      mat-icon-button
-      class="header-notification"
-      *ngIf="showNotifications"
-      (click)="onNotificationClick()"
-    >
-      <mat-icon>notifications</mat-icon>
-      <span class="notification-badge" *ngIf="notificationCount > 0">
-        {{ notificationCount }}
-      </span>
-    </button>
+      <!-- Search Bar -->
+      <mat-form-field appearance="outline" class="header-search" *ngIf="showSearch" style="margin-top: 20px;">
+        <mat-label>Search for Anything</mat-label>
+        <input
+          matInput
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          placeholder="Type to search..."
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <!-- Notifications -->
+      <button
+        mat-icon-button
+        class="header-notification"
+        *ngIf="showNotifications"
+        (click)="onNotificationClick()"
+      >
+        <mat-icon>notifications</mat-icon>
+        <span class="notification-badge" *ngIf="notificationCount > 0">
+          {{ notificationCount }}
+        </span>
+      </button>
+    </ng-template>
   </mat-toolbar>
   
