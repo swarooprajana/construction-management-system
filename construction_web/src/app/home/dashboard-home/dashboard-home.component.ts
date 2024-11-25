@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { CreateJobComponent } from '../../popups/create-job/create-job.component';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -55,8 +56,20 @@ export class DashboardHomeComponent {
     // this.enterprisegroup();
     this.routes.navigate(['/School-Profile'],{ state: { data: rowData } });
   }
+  createJOb(){
+    const dialogRef =this.dialog.open(CreateJobComponent,{
+          data:{
+            title:"Alert",
+            message:"Are you sure want to Delete ?",
+            buttonLabel:"Delete"
+          }
+        })
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
+  }
   openSchoolForm(){
-    this.routes.navigate(['/school-add']);
+    
   }
   goBack() {
     // this.location.back();

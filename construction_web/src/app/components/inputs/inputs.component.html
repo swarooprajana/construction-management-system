@@ -1,4 +1,4 @@
-<div class="row form-group" [formGroup]="parentForm">
+<div class="row form-group ml-0 mr-0" [formGroup]="parentForm">
   <mat-form-field
     appearance="outline"
     class="w-100"
@@ -14,15 +14,18 @@
       class="w-100"
     />
     <mat-icon matSuffix *ngIf="icon">{{ icon }}</mat-icon>
+
+    <!-- Only show toggle button for password fields -->
     <button
       mat-icon-button
       matSuffix
-      *ngIf="type === 'password' || type === 'text'"
+      *ngIf="originalType === 'password'"
       (click)="togglePasswordVisibility()"
       type="button"
     >
       <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
     </button>
+
     <mat-error *ngIf="showError()">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
 </div>

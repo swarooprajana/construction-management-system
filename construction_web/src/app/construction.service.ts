@@ -27,7 +27,7 @@ export class ConstructionService {
 
   httpHeaders=new HttpHeaders({'Accept': 'application/json,  */*, text/html' ,
 
-  'Authorization': `Bearer ${this.token}`
+  // 'Authorization': `Bearer ${this.token}`
 
   })
   constructor(private http:HttpClient,private routes:Router) {

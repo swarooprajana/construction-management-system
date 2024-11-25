@@ -1,5 +1,5 @@
 <div >
-    <div class="row m-0 ">
+    <div class="row m-0 m-sm-40">
         <div class="col-md-7 ">
           <div class="login-image w-100 flex-center align-center h-100 ">
             <!-- <h1>login</h1> -->
@@ -14,8 +14,8 @@
                       <p>Welcome back! Please enter your details</p>
                     </div>
                     <form [formGroup]="logForm" (ngSubmit)="onSubmit()" >
-                        <div class="row  w-100 ml-0">
-                          <div class="col-md-12 p-20">
+                        <div class="row sm-m-10">
+                          <div class="col-md-12">
                             <app-inputs
                             [parentForm]="logForm"
                             controlName="username"
@@ -33,7 +33,7 @@
                           </div>
                       
                       
-                          <div class="col-md-12 w-100">
+                          <div class="col-md-12">
                             <app-inputs
                             [parentForm]="logForm"
                             controlName="password"

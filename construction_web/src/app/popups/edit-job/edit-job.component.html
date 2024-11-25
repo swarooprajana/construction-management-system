@@ -1,0 +1,91 @@
+<div class="row m-0">
+    <div class="col-md-10 d-flex justify-content-center">
+       <h2 mat-dialog-title class="f-s-30 f-w-900">LT81397287283</h2>
+    </div>
+    <div class="row ml-32">
+        <label>Work Type:</label><label>UndergRound</label>
+    </div>
+</div>
+<mat-dialog-content>
+    <div class="row p-50">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Customer  :</label>
+                </div>
+                <div class="col-md-6">
+                    Gilbert Bashirian
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Supervisor :</label>
+                </div>
+                <div class="col-md-6">
+                    Pablo Schuppe
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>From --</label>
+                </div>
+                <div class="col-md-6">
+                    10/11/2022
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>To --</label>
+                </div>
+                <div class="col-md-6">
+                    10/11/2022
+                </div>
+            </div>
+          </div>
+        <div class="col-md-6">
+
+            <app-circular-progression
+            [percent]="70"
+            [size]="150"
+            [strokeWidth]="20"
+            progressColor="#4CAF50"
+            remainingColor="#D3D3D3"
+            class="ml-32"
+          ></app-circular-progression>
+          
+          
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Description</mat-label>
+                    <textarea
+                      matInput
+                      formControlName="description"
+                      rows="4"
+                      placeholder="Enter your description"
+                    ></textarea>
+                    <mat-error *ngIf="form.controls['description'].hasError('required')">
+                      Description is required
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['description'].hasError('minlength')">
+                      Description must be at least 10 characters
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['description'].hasError('maxlength')">
+                      Description must not exceed 500 characters
+                    </mat-error>
+                  </mat-form-field>
+            </form>
+            
+            
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <!-- <app-button [label]="" [buttonColor]="'#8F1402'" type="submit" [buttonWidth]="'50%'" class="w-100 next" (click)="buttonClickFunction?.()"></app-button> -->
+</mat-dialog-actions>

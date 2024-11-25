@@ -11,34 +11,40 @@ export class InputsComponent {
   @Input() parentForm!: FormGroup;
   @Input() controlName!: string;
   @Input() label: string = '';
-  @Input() type: string = '';
+  @Input() type: string = 'password'; // Default type
   @Input() placeholder: string = '';
   @Input() minLength: number = 0;
   @Input() validationMessages: { [key: string]: string } = {};
   @Input() required: boolean = false;
   @Input() icon: string | null = null;
   @Input() showBorders: boolean = false;
+
+  originalType: string = 'password'; // Track the original type
   showPassword: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {
     const control = this.parentForm.get(this.controlName);
-  
+
+    // Save the original input type
+    this.originalType = this.type;
+
     if (control) {
       const validators = [];
-  
+
       if (this.required) {
         validators.push(Validators.required);
       }
-  
+
       if (this.type === 'email') {
         validators.push(Validators.email);
       }
-  
+
       if (this.minLength > 0) {
         validators.push(Validators.minLength(this.minLength));
       }
-  
+
       control.setValidators(validators);
       control.updateValueAndValidity();
     }
@@ -65,7 +71,8 @@ export class InputsComponent {
     }
     return '';
   }
-  togglePasswordVisibility() {
+
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
     this.type = this.showPassword ? 'text' : 'password';
   }

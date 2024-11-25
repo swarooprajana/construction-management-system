@@ -4,7 +4,7 @@
 
   <!-- Search & Filter -->
   <div class="container m-t-20">
-    <div class="row m-r-0">
+    <div class="row mr-15">
       <div class="col-md-8 p-l-32">
         <!-- <ng-container *ngIf="isFilterable" [matColumnDef]="this.rowActionIcon">
           <mat-form-field appearance="outline">
@@ -17,7 +17,7 @@
         <app-heading [heading]="heading" class="p-32"></app-heading>
       </div>
       <div class="col-md-4 d-flex justify-content-end align-items-center p-r-30">
-        <div class="button-container" *ngIf="showButton">
+        <div class="button-container" *ngIf="showButton" class="float-right">
           <button mat-fab extended class="w-50 f-w-600 button rounded-button button-min-width f-s-18" [class]="icon ? 'button-with-icon' : 'button-without-icon'" [style.background-color]="buttonColor" (click)="onButtonClick()">
             <mat-icon aria-hidden="false">{{ buttonIcon }}</mat-icon>
             <span>{{ buttonLabel }}</span>

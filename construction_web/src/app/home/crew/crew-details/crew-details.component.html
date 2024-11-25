@@ -1,0 +1,132 @@
+<div class="m-0">
+    <div class="col-md-10 d-flex justify-content-center">
+       <h2 mat-dialog-title class="f-s-30 f-w-900">SW81397287283</h2>
+    </div>
+    <div class="row ml-32">
+        <div class="col-md-6">
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <label>Work Type:</label>
+                </div>
+                <div class="col-md-6 m-0">
+                    <label>UndergRound</label>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <label>Work Type:</label>
+                </div>
+                <div class="col-md-6">
+                    <label>UndergRound</label>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <label>Work Type:</label>
+                </div>
+                <div class="col-md-6">
+                    <label>UndergRound</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 m-0">
+            <app-image-input
+                [maxFileSize]="1000000" 
+                [acceptedFileTypes]="'image/jpeg, image/png'"
+                [buttonLabel]="'Upload Profile Picture'"
+                (fileSelected)="handleFileUpload($event)">
+            </app-image-input>
+        </div>
+    </div>
+</div>
+<mat-dialog-content>
+    <h1>Personal Details</h1>
+    <form [formGroup]="logForm" (ngSubmit)="onSubmit()">
+        <div class="row ml-0 mr-0">
+            <div class="col-md-12">
+                <div class="row ml-0 mr-0">
+                    <label>Full Name</label>
+                </div>
+                <div class="row mr-0 ml-0">
+                    <div class="col-md-6">
+                        <app-inputs
+                [parentForm]="logForm"
+                controlName="username"
+                label="Employee Name"
+                placeholder="Enter Employee Name"
+                [type]="'text'"
+                [showBorders]="false"
+                [icon]="''" 
+                [required]=true
+                [validationMessages]="{ required: 'Employee Name is required',
+                   
+                 }"
+              ></app-inputs>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="row m-0">
+            <div class="col-md-6">
+                <app-inputs
+                [parentForm]="logForm"
+                controlName="username"
+                label="Employee Name"
+                placeholder="Enter Employee Name"
+                [type]="'text'"
+                [showBorders]="false"
+                [icon]="''" 
+                [required]=true
+                [validationMessages]="{ required: 'Employee Name is required',
+                   
+                 }"
+              ></app-inputs>
+            </div>
+            <div class="col-md-6">
+                <app-inputs
+        [parentForm]="logForm"
+        controlName="username"
+        label="Employee Name"
+        placeholder="Enter Employee Name"
+        [type]="'text'"
+        [showBorders]="false"
+        [icon]="''" 
+        [required]=true
+        [validationMessages]="{ required: 'Employee Name is required',
+           
+         }"
+      ></app-inputs>
+            </div>
+            <div class="col-md-6">
+                
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Description</mat-label>
+                        <textarea
+                          matInput
+                          formControlName="description"
+                          rows="4"
+                          placeholder="Enter your description"
+                        ></textarea>
+                        <mat-error *ngIf="logForm.controls['description'].hasError('required')">
+                          Description is required
+                        </mat-error>
+                        <mat-error *ngIf="logForm.controls['description'].hasError('minlength')">
+                          Description must be at least 10 characters
+                        </mat-error>
+                        <mat-error *ngIf="logForm.controls['description'].hasError('maxlength')">
+                          Description must not exceed 500 characters
+                        </mat-error>
+                      </mat-form-field>
+                
+                
+                
+            </div>
+        </div>
+    </form>
+   
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <app-button [label]="''" [buttonColor]="'#8F1402'" type="submit" [buttonWidth]="'50%'" class="w-100" ></app-button>
+</mat-dialog-actions>

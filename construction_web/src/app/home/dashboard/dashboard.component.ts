@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +11,14 @@ export class DashboardComponent {
   chartData = [40, 30, 20, 10];
   chartLabels = ['Apples', 'Oranges', 'Bananas', 'Grapes'];
   chartColors = ['#FF6384', '#36A2EB', '#FFCE56', '#00A300'];
-  constructor() {}
-
+  isSidebarVisible = true;
+  constructor(private router:Router) {}
+  
   ngOnInit() {
     this.checkIfMobile();
+    this.router.events.subscribe(() => {
+      this.checkSidebarVisibility();
+    });
   }
 
   @HostListener('window:resize')
@@ -36,5 +41,10 @@ openSidebar() {
 
 closeSidebar() {
   this.isOpen = false;
+}
+private checkSidebarVisibility() {
+  const currentRoute = this.router.url;
+  // Hide sidebar on specific route
+  this.isSidebarVisible = currentRoute !== '/dashboard/profile';
 }
 }

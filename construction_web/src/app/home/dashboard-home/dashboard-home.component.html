@@ -11,7 +11,7 @@
                         [showButton]="true"
                         buttonLabel="Create New Job"
                         buttonIcon="add"
-                        (buttonClick)="openSchoolForm()"
+                        (buttonClick)="createJOb()"
                         [showCheckboxes]="false"
                         [paginationSizes]="[5,10]"
                         [defaultPageSize]="10"
@@ -28,9 +28,6 @@
             <div class="row">
                 <div class="col-md-6 pl-32">
                     <app-heading [heading]="'Project Insights'"></app-heading>
-                </div>
-                <div class="col-md-6">
-                    
                 </div>
             </div>
                 <app-pie-chart
@@ -67,6 +64,9 @@
                       
                   </custom-table>
             </mat-card>
+        </div>
+        <div class="col-md-5">
+            <app-calender></app-calender>
         </div>
     </div>
     <div class="row m-10">

@@ -1,0 +1,44 @@
+.chips-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  
+    .chips-label {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  
+    .add-chip {
+      button {
+        background-color: #d3d3d3;
+        font-size: 14px;
+      }
+    }
+  
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+  
+      .chip {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        padding: 4px 12px;
+  
+        span {
+          margin-right: 8px;
+        }
+  
+        .remove-chip {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #ff4d4d;
+        }
+      }
+    }
+  }
+  

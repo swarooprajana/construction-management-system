@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
+import { CrewDetailsComponent } from './crew-details/crew-details.component';
 @Component({
   selector: 'app-crew',
   templateUrl: './crew.component.html',
@@ -88,7 +90,7 @@ export class CrewComponent {
       { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
 
     //   { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+       { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
         { label: 'Edit', icon: 'edit', action: this.editOrder },
         { label: 'Delete', icon: 'delete', action: this.deleteOrder }
       ]
@@ -100,9 +102,22 @@ export class CrewComponent {
   
   onRowClicked(rowData: any) {
     console.log("Row data:", rowData);
-
+    const dialogRef =this.dialog.open(CrewDetailsComponent,{
+          data:{
+            title:"Alert",
+            message:"Are you sure want to Delete ?",
+            buttonLabel:"Delete"
+          },
+          width: '80%', // Set the width of the dialog
+          // Set the height of the dialog
+        }
+        
+      )
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
     // this.enterprisegroup();
-    this.routes.navigate(['/School-Profile'],{ state: { data: rowData } });
+    
   }
   openSchoolForm(){
     this.routes.navigate(['/school-add']);

@@ -6,6 +6,7 @@
   <div class="layout">
     <!-- Sidebar component -->
     <app-sidebar
+    *ngIf="isSidebarVisible"
       [class.open]="isOpen"
       (mouseenter)="openSidebar()"
       (mouseleave)="closeSidebar()"
