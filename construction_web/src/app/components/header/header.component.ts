@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent {
   @Input() showImage: boolean = true;
-  @Input() imageUrl: string = 'assets/logo.png';
+  @Input() imageUrl: string = '';
   @Input() showSearch: boolean = true;
   @Input() showNotifications: boolean = true;
   @Input() notificationCount: number = 0;

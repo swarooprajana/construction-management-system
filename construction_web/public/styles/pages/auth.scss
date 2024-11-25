@@ -12,10 +12,17 @@
     background-color:#fff;
   }
   .login-image{
-    background-image: url('../../images/auth/skywaves_software_company_logo\ \(1\).jpg');
+    background-image: url('../../images/auth/login.png');
     background-size: cover;
     background-color: grey;
+    height:100vh;
     
+}
+.resetpassword{
+  background-image: url('../../images/auth/resetpassword.svg');
+  background-size: cover;
+  background-color: grey;
+  height:100vh;
 }
   .red-background {
     background-color: red;
