@@ -13,7 +13,7 @@
                       <p>We’ve sent a 4 digit OTP to your email</p>
                     </div>
                     <div class="row flex-center">
-                      <p class="f-w-900">Timothy.Mitchellgmail.com</p>
+                      <p class="f-w-900">{{username}}</p>
                     </div>
                     <form (ngSubmit)="otpSubmit()">
                         <!--Mobile icon comes here-->
@@ -41,10 +41,10 @@
                             {{ invalidDetailsMessage }}
                           </div> -->
                           
-                            <div class="row flex-center w-100 m-2">
+                            <div class="row flex-center w-100 ml-2 mt-10">
                               <app-button label="Continue" type="submit" [textColor]="'#fff'" [buttonColor]="'#33A5DC'"  [buttonWidth]="'100%'" class="w-100"></app-button>
                             </div> 
-                            <div class="row flex-center w-100 m-2">
+                            <div class="row flex-center w-100 mt-10 ml-2">
                               <app-button label="Back" type="button" [textColor]="'#000'" [buttonColor]="'#fff'"  [buttonWidth]="'100%'" class="w-100"></app-button>
                             </div>
                           
