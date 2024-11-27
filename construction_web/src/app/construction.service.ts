@@ -43,4 +43,10 @@ export class ConstructionService {
   login(loginObj:any){
     return this.http.post(this.url+"login/",loginObj);
   }
+  sendOtp(emailObj:any){
+    return this.http.post(this.url+"send_otp/",emailObj);
+  }
+  otpVerify(otpObj:any){
+    return this.http.post(this.url+"confirm_otp/",otpObj)
+  }
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { ConstructionService } from '../../construction.service';
 export interface Tile {
   color: string;
   cols: number;
@@ -60,6 +61,7 @@ export class OtpComponent {
   destroyed = new Subject<void>();
   currentScreenSize: any;
   studentForm!: FormGroup;
+  username: any;
 
   constructor(
     private routes: Router,
@@ -67,7 +69,8 @@ export class OtpComponent {
     private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     private renderer: Renderer2,
-    private snackBar:MatSnackBar
+    private snackBar:MatSnackBar,
+    private constructionService:ConstructionService
   ) {}
 
   ngOnInit() {
@@ -84,15 +87,16 @@ export class OtpComponent {
         this.showMobileIcon = result.breakpoints[Breakpoints.XSmall] || result.breakpoints[Breakpoints.Small];
       });
 
-    this.route.queryParams.subscribe((params) => {
-      this.email = params['email'];
-      console.log(this.email, 'email');
-    });
+      this.route.queryParams.subscribe(params => {
+        this.username = params['username'];
+        console.log('Username received:', this.username);
+      });
+    }
 
-    this.studentForm = this.fb.group({
-      Email: ['', [Validators.required]],
-    });
-  }
+    // this.studentForm = this.fb.group({
+    //   Email: ['', [Validators.required]],
+    // });
+  
 
   onOtpInputChange(index: number, nextInput: HTMLInputElement | null, prevInput: HTMLInputElement | null): void {
     this.otpValue[index] = this.otpValue[index].replace(/[^0-9]/g, '');
@@ -151,16 +155,22 @@ export class OtpComponent {
 
   otpSubmit() {
     const otpData = {
-      Email: this.email,
-      Otp: this.otpValue.join(''),
+      email:this.username,    
+      otp:this.otpValue.join(''),    
     };
     console.log(otpData, 'data');
-    this.snackBar.open('otp verified', 'Close', {
-      duration: 3000, // duration in milliseconds
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar']
-    });
-    this.routes.navigate(["/confirmpassword"]);
+    this.constructionService.otpVerify(otpData).subscribe((data:any)=>{
+      if(data["Status"]===200){
+        console.log(data,"otpVerified");
+        this.snackBar.open('OTP Verified', 'Close', {
+          duration: 3000, // duration in milliseconds
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
+        });
+        this.routes.navigate(["/confirmpassword"]);
+      }
+    })
+   
   }
 }

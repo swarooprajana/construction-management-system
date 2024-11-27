@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ConstructionService } from '../../construction.service';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class ResetPwdComponent {
   logForm!:FormGroup;
 
-  constructor(private fb:FormBuilder,private router:Router,private snackBar: MatSnackBar){
+  constructor(private fb:FormBuilder,private router:Router,private snackBar: MatSnackBar,private constructionService:ConstructionService){
 
   }
   ngOnInit(){
@@ -22,20 +23,23 @@ export class ResetPwdComponent {
   }
   onSubmit() {
     if (this.logForm.valid) {
-      const loginSuccessful = true; // Replace this with actual login logic
-
-      if (loginSuccessful) {
-        // Display the success snackbar message
-        this.snackBar.open('Login successful!', 'Close', {
-          duration: 3000, // duration in milliseconds
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
-        });
-      this.router.navigate(["otp"]);
-      console.log('Form Submitted', this.logForm.value);
-      // Here, add your login logic or authentication service call
-    }
+      const formData = {
+        email: this.logForm.value.username,
+        
+      };
+      console.log(formData);
+     this.constructionService.sendOtp(formData).subscribe((data:any)=>{
+      this.snackBar.open('OTP Sent!', 'Close', {
+        duration: 3000, // duration in milliseconds
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['success-snackbar']
+      });
+      const username = this.logForm.value.username;
+      this.router.navigate(['otp'], { queryParams: { username } });
+     })
+        
+    
   }
 }
 }

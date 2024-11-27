@@ -34,4 +34,12 @@
       transition: margin-left 0.3s;
     }
   }
+
+}
+@media (max-width: 768px) {
+  .content {
+    padding-bottom: 100px;
+    margin-bottom: 100px;
+  }
+
 }
