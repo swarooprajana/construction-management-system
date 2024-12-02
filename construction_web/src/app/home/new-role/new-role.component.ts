@@ -37,6 +37,7 @@ export class NewRoleComponent {
     return '';
   }
   onSubmit(){
-
+    if (this.logForm.valid) {
+    }
   }
 }

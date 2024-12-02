@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TableColumn } from '../../components/table/TableColumn';
-import { EnterpriseGroup } from './jobs';
+import { crewTable, EnterpriseGroup } from './jobs';
 import { CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -17,7 +17,12 @@ import { CreateJobComponent } from '../../popups/create-job/create-job.component
 })
 export class DashboardHomeComponent {
   orders: EnterpriseGroup[] = [];
+  crewTable:crewTable[]=[];
   ordersTableColumns: TableColumn[] = [];
+  crewTableColumns: TableColumn[] = [];
+
+  crew: any;
+  jobs: any;
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -32,21 +37,36 @@ export class DashboardHomeComponent {
   ngOnInit(): void {
     
     this.initializeColumns();
+    this.allJobs();
+    this.initializeCrewColumns()
+    this.getAllCrewDashborad();
     
   }
   initializeColumns(): void {
     this.ordersTableColumns = [
-      { name: 'Job ID', dataKey: 'sno', position: 'left', isSortable: false,displayAsIcon: false ,},
-      { name: 'Type', dataKey: 'Schools', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'From', dataKey: 'PrimaryCoordinator', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'To', dataKey: 'SecondaryCoordinator', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Status', dataKey: 'LastVerifiedOn', position: 'left', isSortable: false,displayAsIcon: false,},
+      { name: 'Job ID', dataKey: 'jobId', position: 'left', isSortable: false,displayAsIcon: false ,},
+      { name: 'Type', dataKey: 'jobType', position: 'left', isSortable: false,displayAsIcon: false,},
+      { name: 'From', dataKey: 'startDate', position: 'left', isSortable: false,displayAsIcon: false,},
+      { name: 'To', dataKey: 'endDate', position: 'left', isSortable: false,displayAsIcon: false,},
+      { name: 'Status', dataKey: 'status', position: 'left', isSortable: false,displayAsIcon: false,},
+      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+        { label: 'Edit', icon: 'edit', action: this.editOrder },
+        { label: 'Delete', icon: 'delete', action: this.deleteOrder }
+      ]
+    },
     //   { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
     //   { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
     //     { label: 'Edit', icon: '', action: this.editOrder },
     //     { label: 'Delete', icon: '', action: this.deleteOrder }
     //   ]
     // }
+    ];
+  }
+  initializeCrewColumns(): void {
+    this.crewTableColumns = [
+      { name: 'Name', dataKey: 'crewName', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
     ];
   }
   
@@ -125,7 +145,78 @@ export class DashboardHomeComponent {
   }
 
   deleteOrder(rowData: any): void {
-
     console.log('Deleting order:', rowData);
   }
+  getAllCrewDashborad(){
+    this.cmsService.getAllCrew().subscribe((data:any)=>{
+      this.crew=data;
+      console.log(this.crew,"crew apis");
+      if (Array.isArray(data)) {
+        // Map the array directly
+        this.crewTable = data.map((item: any, index: number) => {
+          const crewName = item.name || '--';
+          const crewid = item.crew_id
+          || '--';
+          
+          const crewavailable = item.is_available || '--';
+          
+         
+
+          return {
+            sno: index + 1,
+            crewName,
+            crewid,
+            
+            crewavailable,
+            
+            
+          };
+        });
+      }
+  })
+      
+  }
+  allJobs() {
+    this.cmsService.getAllJobs().subscribe(
+      (data: any) => {
+        if (Array.isArray(data)) {
+          // Map the array directly
+          this.orders = data.map((item: any, index: number) => {
+            const jobId = item.job_order_id || '--';
+            const jobType = item.job_type || '--';
+            
+            const startDate = item.start_date || '--';
+            const endDate = item.end_date || '--';
+            const status = item.status || '--';
+            const actions = [
+              
+              { label: 'Edit', icon: '', action: this.editOrder.bind(this, item) },
+              { label: 'Delete', icon: '', action: this.deleteOrder.bind(this, item) }
+            ];
+  
+            return {
+              sno: index + 1,
+              jobId,
+              jobType,
+              
+              startDate,
+              endDate,
+              status,
+              actions
+            };
+          });
+  
+          console.log(this.orders, "tabledata");
+        } else {
+          console.warn('Expected an array, but got:', data);
+          this.orders = [];
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching job list:', error);
+      }
+    );
+  }
+  
+  
 }

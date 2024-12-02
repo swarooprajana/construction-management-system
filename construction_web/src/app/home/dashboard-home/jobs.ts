@@ -1,14 +1,16 @@
 export interface EnterpriseGroup {
-    sno: number;
-    Schools: any;
-    PrimaryCoordinator:any;
-    SecondaryCoordinator:any;
-    LastVerifiedOn:any;
-    stuts:any;
-    customOptions?: CustomOption[];
-  }
-  export interface CustomOption {
-    label: string;
-    icon: string;
-    action: (rowData: any) => void;
-  }
+  sno: number;
+  jobId: string;
+  jobType: string;
+  from?: string; // Optional property if not always present
+  to?: string;   // Optional property if not always present
+  startDate: string;
+  endDate: string;
+  status: string;
+  
+}
+export interface crewTable{
+  crewName:string;
+  crewid:any;
+  crewavailable:any
+}

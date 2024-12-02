@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConstructionService } from '../../construction.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -43,65 +43,66 @@ export class LoginComponent {
   
       console.log(formData);
   
-      this.constructionService.login(formData).subscribe(
-        (data: any) => {
-          console.log("Login response:", data);
-          
+      // Pass both `formData` and the `options` object
+      this.constructionService.login(formData, { observe: 'response' }).subscribe({
+        next: (response: HttpResponse<any>) => {
+          console.log("Login response:", response);
+  
           // Check if login is successful
-          if (data && data.msg === 'login successfull' && data.Tokens) {
-            // Store tokens in localStorage/sessionStorage (optional)
-            localStorage.setItem('accessToken', data.Tokens.access);
-            localStorage.setItem('refreshToken', data.Tokens.refresh);
+          if (
+            response.status === 200 &&
+            response.body?.msg === 'login successfull' &&
+            response.body?.Tokens
+          ) {
+            // Store tokens in localStorage/sessionStorage
+            localStorage.setItem('accessToken', response.body.Tokens.access);
+            localStorage.setItem('refreshToken', response.body.Tokens.refresh);
   
             // Display success message
             this.snackBar.open('Login successful!', 'Close', {
+              duration: 3000,
               horizontalPosition: 'center',
               verticalPosition: 'top',
-              panelClass: ['success-snackbar']
+              panelClass: ['success-snackbar'],
             });
   
-            // Navigate to dashboard
-            this.router.navigate(["dashboard"]);
-            console.log(data, "Login success!");
+            // Navigate to the dashboard
+            this.router.navigate(['dashboard']);
           } else {
             // Handle unexpected response structure
             this.snackBar.open('Login failed! Invalid response.', 'Close', {
               duration: 3000,
               horizontalPosition: 'center',
               verticalPosition: 'top',
-              panelClass: ['error-snackbar']
+              panelClass: ['error-snackbar'],
             });
           }
         },
-        (error: HttpErrorResponse) => {
-          if (error.error && error.error.Message) {
-            this.loginErrorMessage = error.error.Message;
-          } else {
-            this.loginErrorMessage = error.message;
-          }
-          
-          // Display error message
-          this.snackBar.open(this.loginErrorMessage || 'Login failed!', 'Close', {
+        error: (error: HttpErrorResponse) => {
+          const errorMessage =
+            error.error?.message || 'Login failed! Please try again.';
+          this.snackBar.open(errorMessage, 'Close', {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: ['error-snackbar']
+            panelClass: ['error-snackbar'],
           });
   
-          console.log(this.loginErrorMessage, "Error message");
-        }
-      );
+          console.error('Error:', error);
+        },
+      });
     } else {
       // Mark all fields as touched to show validation errors
       this.logForm.markAllAsTouched();
-      this.snackBar.open('Invalid login!', 'Close', {
+      this.snackBar.open('Please fill in all required fields.', 'Close', {
         duration: 3000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
-        panelClass: ['error-snackbar']
+        panelClass: ['error-snackbar'],
       });
     }
   }
+  
 forgot(){
   this.router.navigate(["/resetpassword"])
 }

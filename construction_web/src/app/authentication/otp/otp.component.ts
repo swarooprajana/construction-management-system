@@ -3,8 +3,9 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { interval, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ConstructionService } from '../../construction.service';
+import { HttpResponse } from '@angular/common/http';
 export interface Tile {
   color: string;
   cols: number;
@@ -62,7 +63,11 @@ export class OtpComponent {
   currentScreenSize: any;
   studentForm!: FormGroup;
   username: any;
-
+  timer = 0; // Timer in seconds
+  isResendDisabled = false; // Button state
+  timerSubscription: Subscription | null = null;
+  private readonly TIMER_KEY = 'otp_timer_end';
+  endTime: any;
   constructor(
     private routes: Router,
     private route: ActivatedRoute,
@@ -86,7 +91,12 @@ export class OtpComponent {
       .subscribe((result) => {
         this.showMobileIcon = result.breakpoints[Breakpoints.XSmall] || result.breakpoints[Breakpoints.Small];
       });
-
+       this.endTime = localStorage.getItem(this.TIMER_KEY);
+      if(!this.endTime){
+        this.startCountdown(180);
+      }
+      
+      this.restoreTimer();
       this.route.queryParams.subscribe(params => {
         this.username = params['username'];
         console.log('Username received:', this.username);
@@ -123,54 +133,157 @@ export class OtpComponent {
     this.routes.navigate(['./dashboard']);
   }
 
-  startCountdown() {
-    this.countdownSeconds = 10;
-    clearInterval(this.countdownInterval);
-    this.countdownInterval = setInterval(() => {
-      if (this.countdownSeconds > 0) {
-        this.countdownSeconds--;
-      } else {
-        this.resendButtonDisabled = false;
-        clearInterval(this.countdownInterval);
-      }
-    }, 1000);
-  }
+ 
 
   closeErrorMessage() {
     this.showResendError = false;
   }
+  startCountdown(duration: number): void {
+    const endTime = Date.now() + duration * 1000; // Calculate the end time in milliseconds
+    localStorage.setItem(this.TIMER_KEY, endTime.toString()); // Store end time in localStorage
+
+    this.countdownSeconds = duration;
+    this.resendButtonDisabled = true;
+
+    this.timerSubscription = interval(1000)
+      .pipe(take(duration))
+      .subscribe({
+        next: () => {
+          this.countdownSeconds--;
+        },
+        complete: () => {
+          this.resendButtonDisabled = false;
+          this.timerSubscription = null;
+          this.otpExpired = true; // Mark OTP as expired after the timer ends
+          localStorage.removeItem(this.TIMER_KEY); // Clear the timer state
+        }
+      });
+  }
+
+  restoreTimer(): void {
+    const endTime = localStorage.getItem(this.TIMER_KEY);
+    if (endTime) {
+      const remainingTime = Math.ceil((+endTime - Date.now()) / 1000);
+      if (remainingTime > 0) {
+        this.startCountdown(remainingTime); // Resume the timer with remaining time
+      } else {
+        localStorage.removeItem(this.TIMER_KEY); // Clear expired timer
+      }
+    }
+  }
+
 
   formatCountdownTime(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
-    return `${formattedMinutes}:${formattedSeconds}`;
+    const secs = seconds % 60;
+    return `${minutes}:${secs.toString().padStart(2, '0')}`; // Format as MM:SS
   }
 
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   otpSubmit() {
     const otpData = {
-      email:this.username,    
-      otp:this.otpValue.join(''),    
+      email: this.username,
+      otp: this.otpValue.join(''), // Combine OTP digits into a single string
     };
-    console.log(otpData, 'data');
-    this.constructionService.otpVerify(otpData).subscribe((data:any)=>{
-      if(data["Status"]===200){
-        console.log(data,"otpVerified");
-        this.snackBar.open('OTP Verified', 'Close', {
+  
+    console.log('OTP Data:', otpData);
+  
+    this.constructionService.otpVerify(otpData, { observe: 'response' }).subscribe({
+      next: (response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          // Success Snackbar
+          this.snackBar.open('OTP Verified', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar'],
+          });
+          // Navigate to new password page
+          this.routes.navigate(['newpassword']);
+          localStorage.removeItem(this.TIMER_KEY);
+        }
+      },
+      error: (err) => {
+        // Log the error for debugging
+        console.error('Error during OTP verification:', err);
+  
+        // Determine appropriate error message
+        const errorMessage = 
+          err.error?.message || 
+          'Failed to verify OTP. Please try again.';
+  
+        // Display error snackbar
+        this.snackBar.open(errorMessage, 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+      },
+      complete: () => {
+        console.log('OTP verification request completed.');
+      },
+    });
+  }
+  
+  resendOtp(): void {
+    const formData = {
+      email: this.username,
+    };
+  
+    console.log('Resending OTP with data:', formData);
+  
+    this.constructionService.sendOtp(formData, { observe: 'response' }).subscribe({
+      next: (response:  HttpResponse<any>) => {
+        if (response.status === 200) {
+        this.startCountdown(180); // 3 minutes
+        this.otpSentMessage = 'A new OTP has been sent.';
+        this.otpExpired = false;
+  
+        console.log('OTP resent successfully!');
+  
+        // Display success snackbar
+        this.snackBar.open('OTP Sent Successfully!', 'Close', {
           duration: 3000, // duration in milliseconds
           horizontalPosition: 'center',
           verticalPosition: 'top',
-          panelClass: ['success-snackbar']
+          panelClass: ['success-snackbar'],
         });
-        this.routes.navigate(["/confirmpassword"]);
       }
-    })
-   
+    },
+    
+      error: (err) => {
+        // Log the error for debugging
+        console.error('Error during OTP resend:', err);
+  
+        // Determine appropriate error message
+        const errorMessage =
+          err.error?.message || 'Failed to resend OTP. Please try again later.';
+  
+        // Display error snackbar
+        this.snackBar.open(errorMessage, 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+      },
+      complete: () => {
+        console.log('OTP resend request completed.');
+      },
+    });
   }
+  
+  
+ 
+
+
+
 }

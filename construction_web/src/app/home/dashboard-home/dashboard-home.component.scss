@@ -1,4 +1,5 @@
-mat-card{
-    height:250px;
-    box-shadow: 5px solid #cccc;
+mat-card {
+    max-height: 500px; /* Sets the maximum height for the card */
+    box-shadow: 5px solid #cccc; /* Existing box-shadow style */
+    padding: 10px; /* Optional: Adjust padding for better spacing */
 }

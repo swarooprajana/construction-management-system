@@ -1,11 +1,14 @@
+<form [formGroup]="logForm" (ngSubmit)="onSubmit()"> 
 <div>
     <div class="col-md-10 d-flex justify-content-center">
        <h2 mat-dialog-title class="f-s-30 f-w-900">New Job</h2>
     </div>
 </div>
+
 <mat-dialog-content>
+    
     <div class="row ml-0 mr-0">
-        <form [formGroup]="logForm" (ngSubmit)="onSubmit()"> </form>
+        
         <div class="col-md-6">
             <div class="row ml-0 mr-0">
                 <div class="col-md-12">
@@ -14,7 +17,7 @@
                 <div class="col-md-12">                   
                     <app-inputs
                         [parentForm]="logForm"
-                        controlName="workOrderName"
+                        controlName="workOrderId"
                         label="Work order ID"
                         placeholder="Work order ID"
                         [type]="'text'"
@@ -56,7 +59,7 @@
             <div class="col-md-12">
                 
                 <mat-form-field appearance="outline" class="w-100">
-                    <input matInput [matDatepicker]="startPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="dateOfBirth">
+                    <input matInput [matDatepicker]="startPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="startDate" name="startDate" [ngModelOptions]="{standalone: true}">
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker ></mat-datepicker>
                 </mat-form-field>      
@@ -69,7 +72,7 @@
             <div class="col-md-12">
                 
                 <mat-form-field appearance="outline" class="w-100">
-                    <input matInput [matDatepicker]="EndPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="endDate">
+                    <input matInput [matDatepicker]="EndPicker" placeholder="DD-MMM-YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}">
                     <mat-datepicker-toggle matSuffix [for]="EndPicker"></mat-datepicker-toggle>
                     <mat-datepicker #EndPicker ></mat-datepicker>
                 </mat-form-field>      
@@ -121,6 +124,7 @@
             
         </div>
     </div>
+   
 </mat-dialog-content>
 <mat-dialog-actions align="center">
     <div class="row ml-0 mr-0 w-100">
@@ -131,4 +135,5 @@
             <app-button [label]="'Cancel'" [textColor]="'#000'" [buttonColor]="'#ffff'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
         </div>
     </div>
-</mat-dialog-actions>
+</mat-dialog-actions> 
+</form>

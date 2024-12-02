@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -7,51 +7,83 @@ import { ConstructionService } from '../../construction.service';
 @Component({
   selector: 'app-create-job',
   templateUrl: './create-job.component.html',
-  styleUrl: './create-job.component.scss'
+  styleUrls: ['./create-job.component.scss'],
 })
-export class CreateJobComponent {
-  logForm!:FormGroup;
-  loginErrorMessage: any;
-  dateOfBirth:any;
-  endDate:any;
+export class CreateJobComponent implements OnInit {
+  logForm!: FormGroup;
   uploadedFiles: File[] = [];
-  selectedCrew: string[] = ['Lela Widerman', 'Colin Von', 'Travis Jakubowski'];
+  selectedCrew: string[] = [];
   crewOptions: string[] = ['Lela Widerman', 'Colin Von', 'Travis Jakubowski', 'Alice Doe', 'John Smith'];
-  constructor(private fb:FormBuilder,private router:Router,private snackBar: MatSnackBar,private constructionService:ConstructionService){
+  startDate: any;
+  endDate:any;
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private constructionService: ConstructionService
+  ) {}
 
-  }
   ngOnInit() {
     this.logForm = this.fb.group({
-      workOrderName: ['', [Validators.required]], 
-      workType: ['', [Validators.required]], // Wrap validators in an array
-      startDate: ['', [Validators.required]],// Validators already wrapped correctly here
-      email:['', [Validators.required,Validators.email]],
-      password:['', [Validators.required]],
-      cpassword:['', [Validators.required]],
-      role:['', [Validators.required]],
+      workOrderId: ['', Validators.required],
+      workType: ['', Validators.required],
+     
       description: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(500),
-        ],
+        [Validators.required, Validators.minLength(10), Validators.maxLength(500)],
       ],
+      
     });
   }
-  getEmailErrorMessage() {
-    const control = this.logForm.get('username');
-    if (control?.hasError('required')) {
-      return 'Email is required.';
-    }
-    if (control?.hasError('email')) {
-      return 'Please enter a valid email address.';
-    }
-    return '';
-  }
-  onSubmit(){
 
+  onSubmit() {
+    if (this.logForm.valid) {
+      const formData = this.logForm.value;
+      const formattedStartDate = this.startDate
+      ? new Date(this.startDate).toISOString().slice(0, 10)
+      : null;
+    const formattedEndDate = this.endDate
+      ? new Date(this.endDate).toISOString().slice(0, 10)
+      : null;
+      // Construct job object dynamically
+      const jobAdd = {
+        job_order_id: formData.workOrderId,
+        job_type: formData.workType,
+        customer: 'Customer 1', // Replace with dynamic data if available
+        start_date: formattedStartDate,
+        end_date:formattedEndDate,
+        note: formData.description,
+        crews: this.selectedCrew.map((crew) => this.crewOptions.indexOf(crew) + 1), // Map crew to IDs
+        total_units: 10,
+      };
+
+      // Call the API
+      this.constructionService.createJob(jobAdd).subscribe({
+        next: (data: any) => {
+          if (data?.Status === 200) {
+            this.snackBar.open('Job created successfully!', 'Close', {
+              duration: 3000,
+              verticalPosition: 'top',
+            });
+            this.router.navigate(['/jobs']); // Redirect to job list
+          }
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          this.snackBar.open('Failed to create the job. Please try again.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+          });
+        },
+      });
+    } else {
+      this.snackBar.open('Please fill out all required fields.', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    }
   }
+
   onFilesUploaded(files: File[]) {
     this.uploadedFiles = files;
     console.log('Uploaded Files:', this.uploadedFiles);
@@ -62,6 +94,7 @@ export class CreateJobComponent {
       console.error('Error:', message);
     }
   }
+
   updateCrew(updatedCrew: string[]) {
     this.selectedCrew = updatedCrew;
     console.log('Updated Crew:', this.selectedCrew);

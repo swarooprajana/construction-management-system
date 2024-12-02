@@ -43,7 +43,7 @@
     </div>
     <div class="row m-10">
         <div class="col-md-7">
-            <mat-card class="w-100">
+            <mat-card class="w-100 p-64">
                 <custom-table 
                     [tableData]="orders"
                         [heading]="'Dailies History'"
@@ -74,9 +74,9 @@
             
                 <mat-card class="w-100">
                     <custom-table 
-                        [tableData]="orders"
+                        [tableData]="crewTable"
                             [heading]="'My Crew'"
-                            [tableColumns]="ordersTableColumns"
+                            [tableColumns]="crewTableColumns"
                             [isFilterable]="false"
                             [isPageable]="true"
                             [showButton]="true"

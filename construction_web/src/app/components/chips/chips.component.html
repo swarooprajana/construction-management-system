@@ -3,7 +3,7 @@
     
     <!-- Dropdown or button to add chips -->
     <div class="add-chip">
-      <button mat-raised-button [matMenuTriggerFor]="chipMenu">{{ placeholder }}</button>
+      <button mat-raised-button [matMenuTriggerFor]="chipMenu" type="button">{{ placeholder }}</button>
       <mat-menu #chipMenu="matMenu">
         <button mat-menu-item *ngFor="let option of options" (click)="addChip(option)">
           {{ option }}
