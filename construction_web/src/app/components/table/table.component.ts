@@ -65,6 +65,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    
     const columnNames = this.tableColumns.map((tableColumn: TableColumn) => tableColumn.name);
     if (this.rowActionIcon) {
       this.displayedColumns = [this.rowActionIcon, ...columnNames];

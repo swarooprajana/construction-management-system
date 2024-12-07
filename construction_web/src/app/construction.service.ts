@@ -70,4 +70,14 @@ export class ConstructionService {
   createJob(jobData: any) {
     return this.http.post(`${this.url}jobs/`, jobData, this.getRequestOptions());
 } 
+
+getJobById(id: any,options: { observe: 'response' } = { observe: 'response' }): Observable<HttpResponse<any>> {
+
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+
+  return this.http.get<HttpResponse<any>>(`${this.url}job/${id}/`, requestOptions);
+}
 }

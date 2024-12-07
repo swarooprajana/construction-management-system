@@ -1,9 +1,9 @@
 <div class="row m-0">
     <div class="col-md-10 d-flex justify-content-center">
-       <h2 mat-dialog-title class="f-s-30 f-w-900">LT81397287283</h2>
+       <h2 mat-dialog-title >{{jobOrderId}}</h2>
     </div>
     <div class="row ml-32">
-        <label>Work Type:</label><label>UndergRound</label>
+        <label class="fs-lg f-w-600">Work Type:</label><label class="fs-lg f-w-600">{{jobType}}</label>
     </div>
 </div>
 <mat-dialog-content>
@@ -11,41 +11,41 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
-                    <label>Customer  :</label>
+                    <label class="fs-lg f-w-600">Customer  :</label>
                 </div>
-                <div class="col-md-6">
-                    Gilbert Bashirian
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Supervisor :</label>
-                </div>
-                <div class="col-md-6">
-                    Pablo Schuppe
+                <div class="col-md-6 fs-lg">
+                    {{jobCustomer}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label>From --</label>
+                    <label class="fs-lg f-w-600">Supervisor :</label>
                 </div>
-                <div class="col-md-6">
-                    10/11/2022
+                <div class="col-md-6 fs-lg">
+                    {{jobSupervisior}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 fs-lg">
+                    <label class="fs-lg f-w-600">From --</label>
+                </div>
+                <div class="col-md-6 fs-lg">
+                    {{jobStartDate}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label>To --</label>
+                    <label class="fs-lg f-w-600">To --</label>
                 </div>
-                <div class="col-md-6">
-                    10/11/2022
+                <div class="col-md-6 fs-lg">
+                   {{jobEndDate}}
                 </div>
             </div>
           </div>
         <div class="col-md-6">
 
             <app-circular-progression
-            [percent]="70"
+            [percent]="jobWorkDone"
             [size]="150"
             [strokeWidth]="20"
             progressColor="#4CAF50"

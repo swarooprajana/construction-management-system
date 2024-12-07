@@ -7,6 +7,7 @@ export interface EnterpriseGroup {
   startDate: string;
   endDate: string;
   status: string;
+  id:any;
   
 }
 export interface crewTable{

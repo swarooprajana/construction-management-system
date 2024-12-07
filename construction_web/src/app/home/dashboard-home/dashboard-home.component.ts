@@ -8,6 +8,7 @@ import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { CreateJobComponent } from '../../popups/create-job/create-job.component';
+import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -70,11 +71,35 @@ export class DashboardHomeComponent {
     ];
   }
   
-  onRowClicked(rowData: any) {
-    console.log("Row data:", rowData);
-
-    // this.enterprisegroup();
-    this.routes.navigate(['/School-Profile'],{ state: { data: rowData } });
+  onJobRowClicked(rowData: any) {
+    console.log(rowData, "jobRow");
+  
+    const dialogRef = this.dialog.open(EditJobComponent, {
+      data: {
+        title: "Edit Job", // Update dialog title for clarity
+        message: "Edit the details of the selected job.", // Modify message as needed
+        jobId: rowData.jobId, // Pass the jobId from the rowData
+        jobType: rowData.jobType, // Additional data can also be sent
+        startDate: rowData.startDate,
+        endDate: rowData.endDate,
+        status: rowData.status,
+        id:rowData.id,
+      },
+      width: "80%", // Set the dialog width
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed", result);
+  
+      if (result) {
+        // Handle the result returned from the dialog if necessary
+        console.log("Dialog result:", result);
+      }
+    });
+  }
+  
+  onRowClicked(roeData:any){
+    
   }
   createJOb(){
     const dialogRef =this.dialog.open(CreateJobComponent,{
@@ -179,8 +204,10 @@ export class DashboardHomeComponent {
   allJobs() {
     this.cmsService.getAllJobs().subscribe(
       (data: any) => {
+        console.log("alljobs",data)
         if (Array.isArray(data)) {
           // Map the array directly
+
           this.orders = data.map((item: any, index: number) => {
             const jobId = item.job_order_id || '--';
             const jobType = item.job_type || '--';
@@ -202,7 +229,8 @@ export class DashboardHomeComponent {
               startDate,
               endDate,
               status,
-              actions
+              actions,
+              id:item.id
             };
           });
   
