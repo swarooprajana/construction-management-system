@@ -7,9 +7,13 @@
     // border-width: 0;
     background-color:#fff;
 }
-// .login-image{
-//     background-image: url('../../../../public/images/auth/skywaves_software_company_logo\ \(1\).jpg');
-//     background-size: cover;
-//     background-color: grey;
-    
-// }
+.forgot {
+    cursor: pointer;
+    color: #000; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.forgot:hover {
+    color: #8F1402; /* Color change on hover */
+    text-decoration: underline; /* Optional underline effect */
+}

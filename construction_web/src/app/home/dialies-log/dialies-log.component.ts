@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ConstructionService } from '../../construction.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { dialiesTable } from '../dashboard-home/jobs';
 
 @Component({
   selector: 'app-dialies-log',
@@ -15,8 +16,9 @@ import { Sort } from '@angular/material/sort';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class DialiesLogComponent {
-  orders: EnterpriseGroup[] = [];
-  ordersTableColumns: TableColumn[] = [];
+  dialiesTable:dialiesTable[]=[];
+  dialiesColumns: TableColumn[] = [];
+  dailies: any;
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -30,23 +32,17 @@ export class DialiesLogComponent {
 }
   ngOnInit(): void {
     
-    this.initializeColumns();
+    this.intializeDailiesColumns();
+    this.getDailies();
     
   }
-  initializeColumns(): void {
-    this.ordersTableColumns = [
-      
-      { name: 'Type', dataKey: 'type', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'From', dataKey: 'completedQty', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'To', dataKey: 'completionDate', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Status', dataKey: 'status', position: 'left', isSortable: false,displayAsIcon: false,},
-    //   { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
-    //   { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
-    //     { label: 'Edit', icon: '', action: this.editOrder },
-    //     { label: 'Delete', icon: '', action: this.deleteOrder }
-    //   ]
-    // }
-    ];
+  intializeDailiesColumns():void{
+    this.dialiesColumns=[
+      { name: 'Type', dataKey: 'dialyJobType', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Completed Qty', dataKey: 'completedQty', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Completion Date', dataKey: 'completionDate', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false  },
+    ]
   }
   
   onRowClicked(rowData: any) {
@@ -99,8 +95,8 @@ export class DialiesLogComponent {
 
   }
   sortData(sortParameters: Sort) {
-    const keyName: keyof EnterpriseGroup = sortParameters.active as keyof EnterpriseGroup;
-    this.orders = this.orders.sort((a: EnterpriseGroup, b: EnterpriseGroup) =>
+    const keyName: keyof dialiesTable = sortParameters.active as keyof dialiesTable;
+    this.dialiesTable = this.dialiesTable.sort((a: dialiesTable, b: dialiesTable) =>
       sortParameters.direction === 'asc'
         ? String(a[keyName]).localeCompare(String(b[keyName]))
         : String(b[keyName]).localeCompare(String(a[keyName]))
@@ -114,5 +110,33 @@ export class DialiesLogComponent {
   deleteOrder(rowData: any): void {
 
     console.log('Deleting order:', rowData);
+  }
+  getDailies(){
+    this.cmsService.getDailiesHistory().subscribe((data:any)=>{
+      console.log(data,"dialies");
+      this.dailies=data;
+      console.log(this.dailies,"dialies apis");
+      if (Array.isArray(data)) {
+        // Map the array directly
+        this.dialiesTable = data.map((item: any, index: number) => {
+          const dialyJobType = item.job_type || '--';
+          const completedQty = `${item.units_completed || 0} / ${item.total_units || 0}`;
+          
+          const completionDate = "--";
+          const stuts=item.status;
+          
+         
+
+          return {          
+            dialyJobType,
+            completedQty,           
+            completionDate,
+            stuts
+ 
+          };
+        });
+        console.log(this.dialiesTable,"tabledialies");
+      }
+    })
   }
 }

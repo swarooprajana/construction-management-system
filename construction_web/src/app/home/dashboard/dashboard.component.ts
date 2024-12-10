@@ -41,10 +41,14 @@ openSidebar() {
 
 closeSidebar() {
   this.isOpen = false;
+
 }
 private checkSidebarVisibility() {
   const currentRoute = this.router.url;
   // Hide sidebar on specific route
   this.isSidebarVisible = currentRoute !== '/dashboard/profile';
+  if (currentRoute === '/dashboard/profile') {
+    this.isOpen = false;
+  }
 }
 }

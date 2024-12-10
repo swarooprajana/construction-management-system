@@ -120,6 +120,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.checkMobileView();
+    
   }
 
   checkMobileView(): void {
@@ -145,11 +146,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
       collapsed: this.collapsed,
       screenWidth: this.screenWidth
     });
+    console.log("closed");
   }
 
   handleClick(item: INavbarData): void {
     this.shrinkItems(item);
     item.expanded = !item.expanded;
+  
+    // Auto-collapse if the "Profile" is clicked
+    if (item.label === 'Profile') {
+      
+      this.toggleCollapse(false); // Collapse the sidenav
+    }
   }
 
   getActiveClass(data: INavbarData): string {

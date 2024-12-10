@@ -2,26 +2,27 @@
     <div class="row m-10" >
         <div class="col-md-7">
             <mat-card class="w-100 p-10">
-                <custom-table 
+                <div class="table-container">
+                  <custom-table 
                     [tableData]="orders"
-                        [heading]="'Jobs'"
-                        [tableColumns]="ordersTableColumns"
-                        [isFilterable]="false"
-                        [isPageable]="true"
-                        [showButton]="true"
-                        buttonLabel="Create New Job"
-                        buttonIcon="add"
-                        (buttonClick)="createJOb()"
-                        [showCheckboxes]="false"
-                        [paginationSizes]="[5,10]"
-                        [defaultPageSize]="10"
-                        (sort)="sortData($event)"
-                        (rowAction)="handleRowAction($event)"
-                        (rowClick)="onRowClicked($event)"
-                      class="w-100">
-                      
+                    [heading]="'Jobs'"
+                    [tableColumns]="ordersTableColumns"
+                    [isFilterable]="false"
+                    [isPageable]="true"
+                    [showButton]="true"
+                    buttonLabel="Create New Job"
+                    buttonIcon="add"
+                    (buttonClick)="createJOb()"
+                    [showCheckboxes]="false"
+                    [paginationSizes]="[5, 10]"
+                    [defaultPageSize]="10"
+                    (sort)="sortData($event)"
+                    (rowAction)="handleRowAction($event)"
+                    (rowClick)="onJobRowClicked($event)"
+                    class="w-100">
                   </custom-table>
-            </mat-card>
+                </div>
+              </mat-card>
         </div>
         <div class="col-md-5 float-right">
             <mat-card class="ml-10 mt-sm-15">
@@ -43,11 +44,11 @@
     </div>
     <div class="row m-10">
         <div class="col-md-7">
-            <mat-card class="w-100">
+            <mat-card class="w-100 p-64">
                 <custom-table 
-                    [tableData]="orders"
+                    [tableData]="dialiesTable"
                         [heading]="'Dailies History'"
-                        [tableColumns]="ordersTableColumns"
+                        [tableColumns]="dialiesColumns"
                         [isFilterable]="false"
                         [isPageable]="true"
                         [showButton]="false"
@@ -74,9 +75,9 @@
             
                 <mat-card class="w-100">
                     <custom-table 
-                        [tableData]="orders"
+                        [tableData]="crewTable"
                             [heading]="'My Crew'"
-                            [tableColumns]="ordersTableColumns"
+                            [tableColumns]="crewTableColumns"
                             [isFilterable]="false"
                             [isPageable]="true"
                             [showButton]="true"

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 import { CrewDetailsComponent } from './crew-details/crew-details.component';
+import { crewTable } from '../dashboard-home/jobs';
 @Component({
   selector: 'app-crew',
   templateUrl: './crew.component.html',
@@ -16,52 +17,11 @@ import { CrewDetailsComponent } from './crew-details/crew-details.component';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class CrewComponent {
-  orders: EnterpriseGroup[] = [
-    {
-      sno: 1,
-      Type: 'Highland Secondary School',
-      From: 'John Doe',
-      To: 'Jane Smith',
-      Supervisor: 'Michael Lee',
-      TotalCrew: 5,
-      stuts: 'In Progress',
-      customOptions: [
-        {
-          label: 'Edit',
-          icon: 'edit', // Add material or custom icon if needed
-          action: (rowData) => this.editOrder(rowData),
-        },
-        {
-          label: 'Delete',
-          icon: 'delete',
-          action: (rowData) => this.deleteOrder(rowData),
-        },
-      ],
-    },
-    {
-      sno: 2,
-      Type: 'Riverside High School',
-      From: 'Alice Johnson',
-      To: 'Bob Brown',
-      Supervisor: 'Sophia Martin',
-      TotalCrew: 8,
-      stuts: 'Completed',
-      customOptions: [
-        {
-          label: 'Edit',
-          icon: 'edit',
-          action: (rowData) => this.editOrder(rowData),
-        },
-        {
-          label: 'Delete',
-          icon: 'delete',
-          action: (rowData) => this.deleteOrder(rowData),
-        },
-      ],
-    },
-  ];
+  crewTable:crewTable[]=[];
+  crewTableColumns: TableColumn[] = [];
     
   ordersTableColumns: TableColumn[] = [];
+  crew: any;
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -75,26 +35,15 @@ export class CrewComponent {
 }
   ngOnInit(): void {
     
-    this.initializeColumns();
-    
+    this.initializeCrewColumns();
+    this.getAllCrewDashborad();
     
   }
-  initializeColumns(): void {
-    this.ordersTableColumns = [
-      { name: 'Job ID', dataKey: 'sno', position: 'left', isSortable: false,displayAsIcon: false ,},
-      { name: 'Type', dataKey: 'Type', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'From', dataKey: 'From', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'To', dataKey: 'To', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Supervisor', dataKey: 'Supervisor', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Total Crew', dataKey: 'TotalCrew', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
-
-    //   { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false,},
-       { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
-        { label: 'Edit', icon: 'edit', action: this.editOrder },
-        { label: 'Delete', icon: 'delete', action: this.deleteOrder }
-      ]
-    }
+  initializeCrewColumns(): void {
+    this.crewTableColumns = [
+      { name: 'Name', dataKey: 'crewName', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
     ];
   }
   
@@ -104,9 +53,8 @@ export class CrewComponent {
     console.log("Row data:", rowData);
     const dialogRef =this.dialog.open(CrewDetailsComponent,{
           data:{
-            title:"Alert",
-            message:"Are you sure want to Delete ?",
-            buttonLabel:"Delete"
+           rowData:rowData,
+           buttonLabel:"Edit Crew"
           },
           width: '80%', // Set the width of the dialog
           // Set the height of the dialog
@@ -164,8 +112,8 @@ export class CrewComponent {
 
   }
   sortData(sortParameters: Sort) {
-    const keyName: keyof EnterpriseGroup = sortParameters.active as keyof EnterpriseGroup;
-    this.orders = this.orders.sort((a: EnterpriseGroup, b: EnterpriseGroup) =>
+    const keyName: keyof crewTable = sortParameters.active as keyof crewTable;
+    this.crewTable = this.crewTable.sort((a: crewTable, b: crewTable) =>
       sortParameters.direction === 'asc'
         ? String(a[keyName]).localeCompare(String(b[keyName]))
         : String(b[keyName]).localeCompare(String(a[keyName]))
@@ -179,5 +127,34 @@ export class CrewComponent {
   deleteOrder(rowData: any): void {
 
     console.log('Deleting order:', rowData);
+  }
+  getAllCrewDashborad(){
+    this.cmsService.getAllCrew().subscribe((data:any)=>{
+      this.crew=data;
+      console.log(this.crew,"crew apis");
+      if (Array.isArray(data)) {
+        // Map the array directly
+        this.crewTable = data.map((item: any, index: number) => {
+          const crewName = item.name || '--';
+          const crewid = item.crew_id
+          || '--';
+          
+          const crewavailable = item.is_available || '--';
+          
+         
+
+          return {
+            sno: index + 1,
+            crewName,
+            crewid,
+            
+            crewavailable,
+            
+            
+          };
+        });
+      }
+  })
+      
   }
 }

@@ -2,24 +2,24 @@
     <div class="col-md-8">
         <mat-card class="w-100 p-10 mr-10 sm-mr-0">
             <custom-table 
-                [tableData]="orders"
-                    [heading]="'Dialies History'"
-                    [tableColumns]="ordersTableColumns"
-                    [isFilterable]="false"
-                    [isPageable]="true"
-                    [showButton]="false"
-                    buttonLabel="Create New Job"
-                    buttonIcon="add"
-                    (buttonClick)="openSchoolForm()"
-                    [showCheckboxes]="false"
-                    [paginationSizes]="[5,10]"
-                    [defaultPageSize]="10"
-                    (sort)="sortData($event)"
-                    (rowAction)="handleRowAction($event)"
-                    (rowClick)="onRowClicked($event)"
-                  class="w-100">
-                  
-              </custom-table>
+            [tableData]="dialiesTable"
+                [heading]="'Dailies History'"
+                [tableColumns]="dialiesColumns"
+                [isFilterable]="false"
+                [isPageable]="true"
+                [showButton]="false"
+                buttonLabel="Add new Members"
+                buttonIcon="add"
+                (buttonClick)="openSchoolForm()"
+                [showCheckboxes]="false"
+                [paginationSizes]="[5,10]"
+                [defaultPageSize]="10"
+                (sort)="sortData($event)"
+                (rowAction)="handleRowAction($event)"
+                (rowClick)="onRowClicked($event)"
+              class="w-100">
+              
+          </custom-table>
         </mat-card>
     </div>
     <div class="col-md-4">

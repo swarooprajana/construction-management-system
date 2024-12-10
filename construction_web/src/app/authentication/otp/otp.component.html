@@ -15,6 +15,9 @@
                     <div class="row flex-center">
                       <p class="f-w-900">{{username}}</p>
                     </div>
+                    <div *ngIf="isResendDisabled">
+                      Please wait {{ timer }} seconds to resend OTP.
+                    </div>
                     <form (ngSubmit)="otpSubmit()">
                         <!--Mobile icon comes here-->
                         <p class="textcenter">
@@ -33,7 +36,10 @@
                         </div>
                           <div class="textcenter f-w-400 f-s-14 m-b-54 m-2">
                             {{ otpSentMessage || (otpExpired ? "Your OTP has expired. Click on Resend to get a new   ." : "Didn't receive the code?" ) }}
-                            <span [ngStyle]="{'color': resendButtonDisabled ? '#999999' : '#8F1402', 'cursor': resendButtonDisabled ? 'not-allowed' : 'pointer'}"  [attr.disabled]="resendButtonDisabled ? 'disabled' : null" class="text-primary focus:outline-none">
+                            <span  [ngStyle]="{
+                              color: countdownSeconds > 0 ? 'red' : (resendButtonDisabled ? '#999999' : '#8F1402'),
+                              cursor: resendButtonDisabled ? 'not-allowed' : 'pointer'
+                            }"   [attr.disabled]="resendButtonDisabled ? 'disabled' : null" class="text-primary focus:outline-none" (click)="resendOtp()">
                               {{ countdownSeconds > 0 ? formatCountdownTime(countdownSeconds) : 'Resend' }}
                             </span>
                           </div>
