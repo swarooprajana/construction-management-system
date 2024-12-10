@@ -15,3 +15,11 @@ export interface crewTable{
   crewid:any;
   crewavailable:any
 }
+export interface dialiesTable{
+  dialyJobType:string;
+  completedQty:string;
+  completionDate:string;
+  stuts:string;
+
+
+}

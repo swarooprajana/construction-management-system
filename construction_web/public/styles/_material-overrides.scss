@@ -18,4 +18,13 @@
   .mat-mdc-dialog-container .mat-mdc-dialog-title{
     font-weight: 900 !important;
     font-size: 2rem !important;
+    
+}
+.mat-mdc-table{
+  max-height: 100px !important;
+  overflow-y: auto ;
+}
+
+.mat-mdc-dialog-container{
+  height:90vh !important;
 }

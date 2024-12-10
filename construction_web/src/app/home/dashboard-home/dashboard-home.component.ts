@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TableColumn } from '../../components/table/TableColumn';
-import { crewTable, EnterpriseGroup } from './jobs';
+import { crewTable, dialiesTable, EnterpriseGroup } from './jobs';
 import { CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { CreateJobComponent } from '../../popups/create-job/create-job.component';
 import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -18,12 +19,17 @@ import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 })
 export class DashboardHomeComponent {
   orders: EnterpriseGroup[] = [];
-  crewTable:crewTable[]=[];
   ordersTableColumns: TableColumn[] = [];
+  crewTable:crewTable[]=[];
   crewTableColumns: TableColumn[] = [];
+  dialiesTable:dialiesTable[]=[];
+  dialiesColumns: TableColumn[] = [];
+  
 
   crew: any;
   jobs: any;
+  jobId: any;
+  dailies: any;
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -39,8 +45,10 @@ export class DashboardHomeComponent {
     
     this.initializeColumns();
     this.allJobs();
-    this.initializeCrewColumns()
+    this.initializeCrewColumns();
+    this.intializeDailiesColumns();
     this.getAllCrewDashborad();
+    this.getDailies();
     
   }
   initializeColumns(): void {
@@ -69,6 +77,14 @@ export class DashboardHomeComponent {
       { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
     ];
+  }
+  intializeDailiesColumns():void{
+    this.dialiesColumns=[
+      { name: 'Type', dataKey: 'dialyJobType', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Completed Qty', dataKey: 'completedQty', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Completion Date', dataKey: 'completionDate', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Status', dataKey: 'stuts', position: 'left', isSortable: false,displayAsIcon: false  },
+    ]
   }
   
   onJobRowClicked(rowData: any) {
@@ -104,9 +120,9 @@ export class DashboardHomeComponent {
   createJOb(){
     const dialogRef =this.dialog.open(CreateJobComponent,{
           data:{
-            title:"Alert",
+            title:"New Job",
             message:"Are you sure want to Delete ?",
-            buttonLabel:"Delete"
+            buttonLabel:"Create Job"
           }
         })
         dialogRef.afterClosed().subscribe(result => {
@@ -119,40 +135,56 @@ export class DashboardHomeComponent {
   goBack() {
     // this.location.back();
   }
-  handleRowAction(event: any,) {
-    // console.log('Clicked:', event.option, 'with icon:', event.icon, 'for element:', event.element);
-    // this.nameID=event.element.id;
+  handleRowAction(event: any) {
+    console.log('Clicked:', event.option, 'with icon:', event.icon, 'for element:', event.element);
+    // this.nameID = event.element.id;
     // sessionStorage.setItem("nameid", this.nameID);
-    // console.log(this.nameID,'eventId');
-    // if (event.option === 'Delete') {
-    //   const dialogRef =this.dialog.open(AlertpopupComponent,{
-    //     data:{
-    //       title:"Alert",
-    //       message:"Are you sure want to Delete ?",
-    //       buttonLabel:"Delete"
-    //     }
-    //   })
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     console.log('The dialog was closed');
-    //   });
-    //   dialogRef.componentInstance.buttonClickFunction = () => {
-    //     // this.adminService.enterpriseNameDelete(this.nameID).subscribe((data:any)=>
-    //     //   {
-    //     //     if(data['Status']===200){
-    //     //       this.snackbar.open('School Deleted Successfully', 'Close', {
-    //     //         duration: 4000,
-    //     //         horizontalPosition: 'center',
-    //     //         verticalPosition: 'top',
-    //     //       })
-    //     //     }
-    //     //   })
-    //     dialogRef.close();
-
-    //   };
-    // } else if(event.option === 'Edit') {
-    //   this.routes.navigate(['/school-add'],{ state: { data: event.element } })
-    // }
+    // console.log(this.nameID, 'eventId');
+  
+    if (event.option === 'Delete') {
+      this.jobId=event.element.id;
+      console.log(this.jobId);
+      this.cmsService.deleteJobById(this.jobId,{ observe: 'response' }).subscribe({
+        next: (response: HttpResponse<any>) => {
+          console.log("Data Deleted:", response);
+          if (response.status === 204) {
+            this.snackbar.open('Item deleted successfully', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            // Optionally refresh the data table or list
+            this.allJobs(); // Call a method to refresh your data
+          } (error:any) => {
+            this.snackbar.open('Failed to delete item', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+        }
+        }
+    })
+  
+    } else if (event.option === 'Edit') {
+      console.log(event,"edit");
+      const editDialogRef = this.dialog.open(CreateJobComponent, {
+        width: '500px', // Adjust size as needed
+        data: {
+          title: "Edit Job", // Title to display in the popup
+          rowData: event.element ,// Data to be edited
+          buttonLabel:"Edit Job"
+        }
+      });
+  
+      editDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('Edited data:', result); // Process the edited data
+          // Optionally, update the table or send a PUT/POST request here
+        }
+      });
+    }
   }
+  
   openAdEnterpriseGroup(){
 
   }
@@ -210,8 +242,7 @@ export class DashboardHomeComponent {
 
           this.orders = data.map((item: any, index: number) => {
             const jobId = item.job_order_id || '--';
-            const jobType = item.job_type || '--';
-            
+            const jobType = item.job_type || '--';            
             const startDate = item.start_date || '--';
             const endDate = item.end_date || '--';
             const status = item.status || '--';
@@ -245,6 +276,33 @@ export class DashboardHomeComponent {
       }
     );
   }
-  
+  getDailies(){
+    this.cmsService.getDailiesHistory().subscribe((data:any)=>{
+      console.log(data,"dialies");
+      this.dailies=data;
+      console.log(this.dailies,"dialies apis");
+      if (Array.isArray(data)) {
+        // Map the array directly
+        this.dialiesTable = data.map((item: any, index: number) => {
+          const dialyJobType = item.job_type || '--';
+          const completedQty = `${item.units_completed || 0} / ${item.total_units || 0}`;
+          
+          const completionDate = "--";
+          const stuts=item.status;
+          
+         
+
+          return {          
+            dialyJobType,
+            completedQty,           
+            completionDate,
+            stuts
+ 
+          };
+        });
+        console.log(this.dialiesTable,"tabledialies");
+      }
+    })
+  }
   
 }

@@ -80,4 +80,30 @@ getJobById(id: any,options: { observe: 'response' } = { observe: 'response' }): 
 
   return this.http.get<HttpResponse<any>>(`${this.url}job/${id}/`, requestOptions);
 }
+updateJobById(id:any,jobData:any,options: { observe: 'response' }): Observable<HttpResponse<any>> {
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.put<HttpResponse<any>>(`${this.url}job/${id}/`, jobData, requestOptions);
+}
+deleteJobById(id:any,options: { observe: 'response' }): Observable<HttpResponse<any>> {
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.delete<HttpResponse<any>>(`${this.url}job/`+id+`/`, requestOptions);
+}
+getDailiesHistory(){
+  return this.http.get(`${this.url}all_job_progress/`, this.getRequestOptions());
+}
+getByIdCrew(id:any,options: { observe: 'response' } = { observe: 'response' }): Observable<HttpResponse<any>> {
+
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+
+  return this.http.get<HttpResponse<any>>(`${this.url}crew/${id}/`, requestOptions);
+}
 }

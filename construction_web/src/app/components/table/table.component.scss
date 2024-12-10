@@ -1,6 +1,8 @@
 table {
   width: 100%;
   padding:20px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 td{
@@ -62,4 +64,11 @@ th{
 
 div.vertical-line.left {
     border-left: 1px solid rgba(207, 207, 207, 1);
+}
+.mat-header-row,
+.mat-header-cell {
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure the header stays above the table body */
 }

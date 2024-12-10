@@ -34,6 +34,11 @@ export const navbarData: INavbarData[] = [
       icon: 'add_circle_outline',
        routeLink: 'New Role' 
     },
+    { 
+      label: 'Profile', 
+      icon: 'person',
+      routeLink: 'profile' 
+    },
     
     
 
