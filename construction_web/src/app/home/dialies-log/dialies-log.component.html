@@ -25,9 +25,9 @@
     <div class="col-md-4">
         <mat-card class="flex-center p-32 ml-15 sm-mr-0">
             <app-pie-chart
-            [chartData]="[30, 40, 30]"
-            [chartLabels]="['completed', 'On Hold', 'On Progress']"
-            [colors]="['#0F0F10', '#595d5f', '#3357FF']"
+            [chartData]="chartData"
+            [chartLabels]="chartLabels"
+            [colors]="chartColors"
             [chartWidth]="'300px'"
             [chartHeight]="'300px'">
         </app-pie-chart>
