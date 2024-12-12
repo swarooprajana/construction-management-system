@@ -106,4 +106,20 @@ getByIdCrew(id:any,options: { observe: 'response' } = { observe: 'response' }): 
 
   return this.http.get<HttpResponse<any>>(`${this.url}crew/${id}/`, requestOptions);
 }
+
+registrationNewRole(regObj:any,options: { observe: 'response' }): Observable<HttpResponse<any>>{
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.post<HttpResponse<any>>(`${this.url}registration/`, regObj, requestOptions);
+
+}
+getProfile(options: { observe: 'response' }): Observable<HttpResponse<any>>{
+  const requestOptions = {
+    
+    ...options, // Merge additional options
+  };
+  return this.http.get<HttpResponse<any>>(`${this.url}viewprofile/`+localStorage.getItem('accessToken'),requestOptions);
+}
 }

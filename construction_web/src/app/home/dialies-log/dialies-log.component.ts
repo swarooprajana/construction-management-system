@@ -19,6 +19,10 @@ export class DialiesLogComponent {
   dialiesTable:dialiesTable[]=[];
   dialiesColumns: TableColumn[] = [];
   dailies: any;
+  chartData: number[] = [];
+  chartLabels: string[] = ['Completed', 'On Hold', 'In Progress'];
+  chartColors: string[] = ['#0F0F10', '#595d5f', '#3357FF'];
+
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -137,6 +141,16 @@ export class DialiesLogComponent {
         });
         console.log(this.dialiesTable,"tabledialies");
       }
+      this.processJobsData();
     })
+  }
+  processJobsData() {
+    // Process the `dailies` data to calculate counts
+    const completedCount = this.dailies.filter((job:any) => job.work_done_percentage === 100).length;
+    const onHoldCount = this.dailies.filter((job:any) => job.status === 'On Hold').length;
+    const inProgressCount = this.dailies.filter((job:any) => job.status === 'In Progress').length;
+
+    // Update chartData dynamically
+    this.chartData = [completedCount, onHoldCount, inProgressCount];
   }
 }

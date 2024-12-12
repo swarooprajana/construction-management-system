@@ -44,6 +44,11 @@ export class CrewComponent {
       { name: 'Name', dataKey: 'crewName', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+        { label: 'Edit', icon: 'edit', action: this.editOrder },
+        { label: 'Delete', icon: 'delete', action: this.deleteOrder }
+      ]
+    }
     ];
   }
   
@@ -140,16 +145,19 @@ export class CrewComponent {
           || '--';
           
           const crewavailable = item.is_available || '--';
-          
+          const actions = [
+              
+            { label: 'Edit', icon: '', action: this.editOrder.bind(this, item) },
+            { label: 'Delete', icon: '', action: this.deleteOrder.bind(this, item) }
+          ];
          
 
           return {
             sno: index + 1,
             crewName,
-            crewid,
-            
+            crewid,            
             crewavailable,
-            
+            actions,
             
           };
         });
