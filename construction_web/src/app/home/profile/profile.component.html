@@ -12,12 +12,21 @@
                   #fileInput
                 />
                 <label for="digitalSignInput" class="image-box">
-                  <img *ngIf="uploadFileUrl" [src]="uploadFileUrl" alt="Uploaded School Logo" class="preview-image" />
-                  <div *ngIf="!uploadFileUrl" class="box-text">
-                    <img src="../../assets/images/svgs/imageinsidesgets.svg" alt="Upload Icon" class="upload-icon" />
+                  <!-- Show uploaded image or default placeholder -->
+                  <div class="avatar">
+                    <img
+                      *ngIf="uploadFileUrl; else placeholder"
+                      [src]="uploadFileUrl"
+                      alt="Uploaded Image"
+                      class="avatar-image"
+                    />
+                    <ng-template #placeholder>
+                      <img src="../../assets/images/svgs/default-avatar.svg" alt="Default Avatar" class="avatar-image" />
+                    </ng-template>
                   </div>
                 </label>
-            </div>    
+              </div>
+                 
         </div>
         <div class="col-md-12 mt-50 w-100">
             <label>Name</label>
@@ -36,7 +45,7 @@
              
     ></app-inputs>
         </div>
-        <div class="col-md-12 mt-20 w-100">
+        <div class="col-md-12  w-100">
             <label>Designation</label>
             <app-inputs
             [parentForm]="logForm"
@@ -53,9 +62,64 @@
              
     ></app-inputs>
         </div>
+        <div class="col-md-12">
+            <label>Address</label>
+            <mat-form-field appearance="outline" class="w-100">
+                
+                <textarea
+                  matInput
+                  formControlName="address"
+                  rows="4"
+                  placeholder="Address"
+                ></textarea>
+                <mat-error *ngIf="logForm.controls['address'].hasError('required')">
+                    Address is required
+                </mat-error>
+                <mat-error *ngIf="logForm.controls['address'].hasError('minlength')">
+                    Address must be at least 10 characters
+                </mat-error>
+                <mat-error *ngIf="logForm.controls['address'].hasError('maxlength')">
+                    Address must not exceed 500 characters
+                </mat-error>
+              </mat-form-field> 
+        </div>
+        <div class="col-md-12 mt- w-100">
+            <label>Email</label>
+            <app-inputs
+            [parentForm]="logForm"
+            controlName="email"
+            label=""
+            placeholder=""
+            [type]="'email'"
+            [showBorders]="false"
+            [icon]="''" 
+            [required]=true
+            [validationMessages]="{ required: 'Email is required', 
+             }"
+             class="w-100"
+             
+    ></app-inputs>
+        </div>
+        <div class="col-md-12 mt- w-100">
+            <label>Mobile #</label>
+            <app-inputs
+            [parentForm]="logForm"
+            controlName="mobile"
+            label=""
+            placeholder=""
+            [type]="'number'"
+            [showBorders]="false"
+            [icon]="''" 
+            [required]=true
+            [validationMessages]="{ required: 'Mobile # is required', 
+             }"
+             class="w-100"
+             
+    ></app-inputs>
+        </div>
         <div class="row flex-center ml-5 mt-50 mr-0">
             <div class="col-md-6 w-100 ">
-                <app-button [label]="'Create JOb'"[textColor]="'#fff'"[buttonColor]="'#000'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
+                <app-button [label]="'Edit Profile'"[textColor]="'#fff'"[buttonColor]="'#000'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>
             </div>
             <div class="col-md-6">
                 <app-button [label]="'Cancel'" [textColor]="'#000'" [buttonColor]="'#ffff'" type="submit" [buttonWidth]="'80%'" class="w-80" ></app-button>

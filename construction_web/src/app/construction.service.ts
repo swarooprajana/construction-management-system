@@ -14,7 +14,9 @@ export class ConstructionService {
 
   url = "http://35.174.156.124:8000/";
 
-  constructor(private http: HttpClient, private routes: Router) {}
+  constructor(private http: HttpClient, private routes: Router) {
+    console.log(this.getRequestOptions(),"aa");
+  }
 
   // Function to trigger an event for refresh
   callFunction() {
@@ -32,9 +34,12 @@ export class ConstructionService {
 
   // Dynamic request options for APIs
   private getRequestOptions() {
-    return { headers: this.getHttpHeaders() };
+    return { headers: this.getHttpHeaders() ,
+      
+    };
+    
   }
-
+  
   private getMultipartRequestOptions() {
     return {
       headers: new HttpHeaders({
@@ -67,8 +72,13 @@ export class ConstructionService {
   getAllJobs(){
     return this.http.get(`${this.url}jobs/`, this.getRequestOptions());
   }
-  createJob(jobData: any) {
-    return this.http.post(`${this.url}jobs/`, jobData, this.getRequestOptions());
+  createJob(jobData:any,options: { observe: 'response' }): Observable<HttpResponse<any>>{
+    const requestOptions = {
+      ...this.getRequestOptions(),
+      ...options, // Merge additional options
+    };
+    return this.http.post<HttpResponse<any>>(`${this.url}jobs/`, jobData, requestOptions);
+    
 } 
 
 getJobById(id: any,options: { observe: 'response' } = { observe: 'response' }): Observable<HttpResponse<any>> {
@@ -117,9 +127,12 @@ registrationNewRole(regObj:any,options: { observe: 'response' }): Observable<Htt
 }
 getProfile(options: { observe: 'response' }): Observable<HttpResponse<any>>{
   const requestOptions = {
-    
+    ...this.getRequestOptions(),
     ...options, // Merge additional options
   };
-  return this.http.get<HttpResponse<any>>(`${this.url}viewprofile/`+localStorage.getItem('accessToken'),requestOptions);
+  return this.http.get<HttpResponse<any>>(`${this.url}viewprofile/`,requestOptions);
+}
+getAllActiveCrew(){
+  return this.http.get(`${this.url}crew/`, this.getRequestOptions())
 }
 }

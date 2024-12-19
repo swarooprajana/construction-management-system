@@ -19,7 +19,14 @@ export class ProfileComponent {
   ngOnInit(){
     this.logForm = this.fb.group({
       name: ['', [Validators.required]], 
-      designation: ['', [Validators.required]], // Wrap validators in an array
+      designation: ['', [Validators.required]],
+       // Wrap validators in an array
+       address: [
+        '',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(500)],
+      ],
+      email: ['', [Validators.required,Validators.email]],
+      mobile: ['', [Validators.required]],
     });
     this.getProfileCms();
   }
@@ -40,32 +47,28 @@ export class ProfileComponent {
     }
   }
   onSubmit(){
+    if(this.logForm.valid){
 
+    }
+    else{
+      this.logForm.markAllAsTouched();
+    }
   }
-
   getProfileCms(){
     this.construction.getProfile({ observe: 'response' }).subscribe(
       (response: HttpResponse<any>) => {
-        if (response.status === 200 && response.ok) {
+        if (response.status === 201 && response.ok) {
           // Save the response body (job details)
           const crewData = response.body;
-          console.log("crewdata", crewData);
-          // this.jobCustomer=jobData.customer;
-          // this.jobSupervisior=jobData.supervisor_name;
-          // this.startDate=jobData.start_date;
-          // this.endDate=jobData.end_date;
-          // this.jobWorkDone=jobData.work_done_percentage;
-          // this.jobOrderId=jobData.job_order_id;
-          // this.jobType=jobData.job_type;
+          console.log("profile", crewData);
           this.logForm.patchValue({
-            username:crewData.name,
-            // workType:jobData.job_type,
-            // description: jobData.note,
+            name:crewData.name,
+            designation:crewData.role,
+            address:crewData.address,
+            email:crewData.email,
+            mobile:crewData.phone_number
           });
-          // // Example: Save to a variable (adjust as needed)
-          // this.savedJobData = jobData; // Make sure `savedJobData` is defined in the class
-  
-          // Further processing, if needed
+          
         } else {
           console.error('Unexpected response status:', response.status);
         }
