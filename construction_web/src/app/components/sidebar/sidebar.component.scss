@@ -194,7 +194,7 @@
           }
 
           .link-text {
-            display: block;
+            display: none;
             margin-top: 0.25rem;
           }
         }
@@ -203,7 +203,7 @@
 
     .scrollwrap {
       height: auto;
-      overflow: hidden;
+      overflow: scroll;
     }
   }
 }

@@ -15,8 +15,8 @@ export class CreateJobComponent implements OnInit {
   @Input() buttonLabel: string='';
   logForm!: FormGroup;
   uploadedFiles: File[] = [];
-  selectedCrew: string[] = [];
-  crewOptions: string[] = ['Lela Widerman', 'Colin Von', 'Travis Jakubowski', 'Alice Doe', 'John Smith'];
+  selectedCrew: any[] = [];
+  crewOptions: any[] = [];
   startDate: any;
   endDate:any;
   jobCustomer: any;
@@ -58,7 +58,7 @@ export class CreateJobComponent implements OnInit {
     if(this.id){
       this.getidByJob()
     }
-    
+    this.activeCrew();
   }
 
   onSubmit() {
@@ -78,18 +78,24 @@ export class CreateJobComponent implements OnInit {
         start_date: formattedStartDate,
         end_date:formattedEndDate,
         note: formData.description,
-        crews: this.selectedCrew.map((crew) => this.crewOptions.indexOf(crew) + 1), // Map crew to IDs
+        crews: this.selectedCrew.map((chip) => chip.id), // Map crew to IDs
         total_units: 10,
       };
       if(!this.id){
-        this.constructionService.createJob(jobAdd).subscribe({
-          next: (data: any) => {
-            if (data?.Status === 200) {
+        this.constructionService.createJob(jobAdd, { observe: 'response' }).subscribe({
+          next: (response: HttpResponse<any>) => {
+            console.log("Login response:", response);
+    
+            // Check if login is successful
+            if (
+              response.status === 201
+            ) {
               this.snackBar.open('Job created successfully!', 'Close', {
                 duration: 3000,
                 verticalPosition: 'top',
               });
-              this.router.navigate(['/jobs']); // Redirect to job list
+              this.dialogRef.close();
+              
             }
           },
           error: (err) => {
@@ -107,10 +113,13 @@ export class CreateJobComponent implements OnInit {
     
             // Check if login is successful
             if (
-              response.status === 200 &&
-              response.body?.msg === 'login successfull' &&
-              response.body?.Tokens
+              response.status === 200               
             ) {
+              this.snackBar.open('Job Updated successfully!', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+              });
+              this.dialogRef.close();
               }
             }
           })
@@ -136,9 +145,9 @@ export class CreateJobComponent implements OnInit {
     }
   }
 
-  updateCrew(updatedCrew: string[]) {
-    this.selectedCrew = updatedCrew;
-    console.log('Updated Crew:', this.selectedCrew);
+  updateCrew(selectedChips: { id: number; name: string }[]): void {
+    this.selectedCrew = selectedChips;
+    console.log('Selected Crew IDs:', this.selectedCrew.map((chip) => chip.id));
   }
   getidByJob() {
     
@@ -170,6 +179,22 @@ export class CreateJobComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to fetch job details:', error);
+      }
+    );
+  }
+  activeCrew(): void {
+    this.constructionService.getAllActiveCrew().subscribe(
+      (data: any) => {
+        this.crewOptions = data.map((crew: any) => ({
+          id: crew.id, // Unique ID
+          name: crew.name, // Name to display in the dropdown
+          crew_id: crew.crew_id,
+          is_available: crew.is_available
+        }));
+        console.log('Crew options:', this.crewOptions);
+      },
+      (error) => {
+        console.error('Error fetching active crew:', error);
       }
     );
   }

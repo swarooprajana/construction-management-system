@@ -127,6 +127,8 @@ export class DashboardHomeComponent {
         })
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
+          this.allJobs();
+
         });
   }
   openSchoolForm(){
@@ -179,7 +181,7 @@ export class DashboardHomeComponent {
       editDialogRef.afterClosed().subscribe(result => {
         if (result) {
           console.log('Edited data:', result); // Process the edited data
-          // Optionally, update the table or send a PUT/POST request here
+         this.allJobs();
         }
       });
     }

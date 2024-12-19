@@ -26,6 +26,7 @@ export class NewRoleComponent {
       cpassword:['', [Validators.required]],
       role:['', [Validators.required]]
     });
+    
   }
   getEmailErrorMessage() {
     const control = this.logForm.get('username');
@@ -99,4 +100,6 @@ export class NewRoleComponent {
       });
     }
   }
+
+  
 }

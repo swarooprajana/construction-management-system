@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row m-10" >
         <div class="col-md-7">
-            <mat-card class="w-100 p-10">
+            <mat-card class="w-100 p-10 jobsTable">
                 <div class="table-container">
                   <custom-table 
                     [tableData]="orders"
@@ -14,8 +14,8 @@
                     buttonIcon="add"
                     (buttonClick)="createJOb()"
                     [showCheckboxes]="false"
-                    [paginationSizes]="[5, 10]"
-                    [defaultPageSize]="10"
+                    [paginationSizes]="[5]"
+                    [defaultPageSize]="5"
                     (sort)="sortData($event)"
                     (rowAction)="handleRowAction($event)"
                     (rowClick)="onJobRowClicked($event)"
@@ -44,7 +44,7 @@
     </div>
     <div class="row m-10">
         <div class="col-md-7">
-            <mat-card class="w-100 p-64">
+            <mat-card class="w-100 p-64 jobsTable">
                 <custom-table 
                     [tableData]="dialiesTable"
                         [heading]="'Dailies History'"
@@ -56,8 +56,8 @@
                         buttonIcon="add"
                         (buttonClick)="openSchoolForm()"
                         [showCheckboxes]="false"
-                        [paginationSizes]="[5,10]"
-                        [defaultPageSize]="10"
+                        [paginationSizes]="[5]"
+                        [defaultPageSize]="5"
                         (sort)="sortData($event)"
                         (rowAction)="handleRowAction($event)"
                         (rowClick)="onRowClicked($event)"
