@@ -10,6 +10,7 @@ import { Sort } from '@angular/material/sort';
 import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 import { CrewDetailsComponent } from './crew-details/crew-details.component';
 import { crewTable } from '../dashboard-home/jobs';
+import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-crew',
   templateUrl: './crew.component.html',
@@ -17,11 +18,13 @@ import { crewTable } from '../dashboard-home/jobs';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class CrewComponent {
+  isLoading: boolean = true;
   crewTable:crewTable[]=[];
   crewTableColumns: TableColumn[] = [];
     
   ordersTableColumns: TableColumn[] = [];
   crew: any;
+  crewId: any;
   constructor(private currencyPipe: CurrencyPipe,
     private decimalPipe: DecimalPipe,
     private percentPipe: PercentPipe,private dialog:MatDialog,private routes:Router,private cmsService:ConstructionService,private snackbar:MatSnackBar) {
@@ -34,7 +37,9 @@ export class CrewComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.initializeCrewColumns();
     this.getAllCrewDashborad();
     
@@ -68,12 +73,26 @@ export class CrewComponent {
       )
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
+          this.getAllCrewDashborad();
         });
     // this.enterprisegroup();
     
   }
-  openSchoolForm(){
-    this.routes.navigate(['/school-add']);
+  openCrewForm(){
+    const dialogRef =this.dialog.open(CrewDetailsComponent,{
+      data:{
+      rowData: null,
+      buttonLabel:"Post Crew"
+      },
+      width: '80%', // Set the width of the dialog
+      // Set the height of the dialog
+    }
+    
+  )
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getAllCrewDashborad();
+    });
   }
   goBack() {
     // this.location.back();
@@ -84,31 +103,28 @@ export class CrewComponent {
     // sessionStorage.setItem("nameid", this.nameID);
     // console.log(this.nameID,'eventId');
     if (event.option === 'Delete') {
-    //   const dialogRef =this.dialog.open(AlertpopupComponent,{
-    //     data:{
-    //       title:"Alert",
-    //       message:"Are you sure want to Delete ?",
-    //       buttonLabel:"Delete"
-    //     }
-    //   }
-    // )
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     console.log('The dialog was closed');
-    //   });
-    //   dialogRef.componentInstance.buttonClickFunction = () => {
-    //     // this.adminService.enterpriseNameDelete(this.nameID).subscribe((data:any)=>
-    //     //   {
-    //     //     if(data['Status']===200){
-    //     //       this.snackbar.open('School Deleted Successfully', 'Close', {
-    //     //         duration: 4000,
-    //     //         horizontalPosition: 'center',
-    //     //         verticalPosition: 'top',
-    //     //       })
-    //     //     }
-    //     //   })
-    //     dialogRef.close();
-
-    //   };
+      this.crewId=event.element.crewid;
+      console.log(this.crewId);
+      this.cmsService.deleteCrewById(this.crewId,{ observe: 'response' }).subscribe({
+        next: (response: HttpResponse<any>) => {
+          console.log("Data Deleted:", response);
+          if (response.status === 204) {
+            this.snackbar.open('Crew deleted successfully', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            // Optionally refresh the data table or list
+            this.getAllCrewDashborad(); // Call a method to refresh your data
+          } (error:any) => {
+            this.snackbar.open('Failed to delete item', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+        }
+        }
+    })
     } else if(event.option === 'Edit') {
       this.routes.navigate(['/school-add'],{ state: { data: event.element } })
     }
@@ -134,6 +150,7 @@ export class CrewComponent {
     console.log('Deleting order:', rowData);
   }
   getAllCrewDashborad(){
+    this.isLoading=true;
     this.cmsService.getAllCrew().subscribe((data:any)=>{
       this.crew=data;
       console.log(this.crew,"crew apis");
@@ -161,6 +178,7 @@ export class CrewComponent {
             
           };
         });
+        this.isLoading=false;
       }
   })
       

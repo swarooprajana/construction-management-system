@@ -16,6 +16,7 @@ import { dialiesTable } from '../dashboard-home/jobs';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class DialiesLogComponent {
+  isLoading=true;
   dialiesTable:dialiesTable[]=[];
   dialiesColumns: TableColumn[] = [];
   dailies: any;
@@ -35,7 +36,9 @@ export class DialiesLogComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.intializeDailiesColumns();
     this.getDailies();
     

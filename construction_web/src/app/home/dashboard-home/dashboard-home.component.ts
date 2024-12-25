@@ -24,7 +24,7 @@ export class DashboardHomeComponent {
   crewTableColumns: TableColumn[] = [];
   dialiesTable:dialiesTable[]=[];
   dialiesColumns: TableColumn[] = [];
-  
+  isLoading=true;
 
   crew: any;
   jobs: any;
@@ -42,7 +42,9 @@ export class DashboardHomeComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.initializeColumns();
     this.allJobs();
     this.initializeCrewColumns();

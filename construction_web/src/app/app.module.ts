@@ -51,6 +51,7 @@ import { MultipleUploadComponent } from './components/multiple-upload/multiple-u
 import { ChipsComponent } from './components/chips/chips.component';
 import { CrewDetailsComponent } from './home/crew/crew-details/crew-details.component';
 import { ImageInputComponent } from './components/image-input/image-input.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { ImageInputComponent } from './components/image-input/image-input.compon
     ChipsComponent,
     CrewDetailsComponent,
     ImageInputComponent,
+    SpinnerComponent,
   
   ],
   imports: [

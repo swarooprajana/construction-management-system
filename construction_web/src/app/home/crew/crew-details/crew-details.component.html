@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-10 d-flex justify-content-center">
-       <h2 mat-dialog-title class="f-s-30 f-w-900">SW81397287283</h2>
+       <h2 mat-dialog-title class="f-s-30 f-w-900">{{crewData?.crew_id?.toUpperCase()||'New Crew'}}</h2>
     </div>
     <div class="row m-0">
         <div class="col-md-6">
@@ -39,94 +39,57 @@
         </div>
     </div>
 </div>
-<mat-dialog-content>
-    <h1>Personal Details</h1>
-    <form [formGroup]="logForm" (ngSubmit)="onSubmit()">
-        <div class="row ml-0 mr-0">
+<form [formGroup]="logForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <h1>Personal Details</h1>
+        
+            <div class="row ml-0 mr-0">
+                <div class="col-md-12">
+                    <div class="row ml-0 mr-0">
+                        <label>Full Name</label>
+                    </div>
+                    <div class="row mr-0 ml-0">
+                        <div class="col-md-6">
+                            <app-inputs
+                    [parentForm]="logForm"
+                    controlName="username"
+                    label="Employee Name"
+                    placeholder="Enter Employee Name"
+                    [type]="'text'"
+                    [showBorders]="false"
+                    [icon]="''" 
+                    [required]=true
+                    [validationMessages]="{ required: 'Employee Name is required',
+                    
+                    }"
+                ></app-inputs>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            
             <div class="col-md-12">
                 <div class="row ml-0 mr-0">
-                    <label>Full Name</label>
+                    <label>Availability Status</label>
                 </div>
                 <div class="row mr-0 ml-0">
                     <div class="col-md-6">
-                        <app-inputs
-                [parentForm]="logForm"
-                controlName="username"
-                label="Employee Name"
-                placeholder="Enter Employee Name"
-                [type]="'text'"
-                [showBorders]="false"
-                [icon]="''" 
-                [required]=true
-                [validationMessages]="{ required: 'Employee Name is required',
-                   
-                 }"
-              ></app-inputs>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-select formControlName="availability">
+                            <mat-option [value]="true">Available</mat-option>
+                            <mat-option [value]="false">Not Available</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="logForm.get('availability')?.hasError('required')">
+                            Availability status is required
+                            </mat-error>
+                        </mat-form-field>
                     </div>
-                    
                 </div>
-            </div>
-            
-        </div>
-        <div class="row m-0">
-            <div class="col-md-6">
-                <app-inputs
-                [parentForm]="logForm"
-                controlName="username"
-                label="Employee Name"
-                placeholder="Enter Employee Name"
-                [type]="'text'"
-                [showBorders]="false"
-                [icon]="''" 
-                [required]=true
-                [validationMessages]="{ required: 'Employee Name is required',
-                   
-                 }"
-              ></app-inputs>
-            </div>
-            <div class="col-md-6">
-                <app-inputs
-        [parentForm]="logForm"
-        controlName="username"
-        label="Employee Name"
-        placeholder="Enter Employee Name"
-        [type]="'text'"
-        [showBorders]="false"
-        [icon]="''" 
-        [required]=true
-        [validationMessages]="{ required: 'Employee Name is required',
-           
-         }"
-      ></app-inputs>
-            </div>
-            <div class="col-md-6">
-                
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Description</mat-label>
-                        <textarea
-                          matInput
-                          formControlName="description"
-                          rows="4"
-                          placeholder="Enter your description"
-                        ></textarea>
-                        <mat-error *ngIf="logForm.controls['description'].hasError('required')">
-                          Description is required
-                        </mat-error>
-                        <mat-error *ngIf="logForm.controls['description'].hasError('minlength')">
-                          Description must be at least 10 characters
-                        </mat-error>
-                        <mat-error *ngIf="logForm.controls['description'].hasError('maxlength')">
-                          Description must not exceed 500 characters
-                        </mat-error>
-                      </mat-form-field>
-                
-                
-                
-            </div>
-        </div>
-    </form>
-   
-</mat-dialog-content>
-<mat-dialog-actions align="center">
-    <app-button [label]="data?.buttonLabel" [buttonColor]="'#33A5DC'" type="submit" [buttonWidth]="'50%'" class="w-100" ></app-button>
-</mat-dialog-actions>
+            </div>  
+            </div> 
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <app-button [label]="data?.buttonLabel" [buttonColor]="'#33A5DC'" type="submit" [buttonWidth]="'50%'" class="w-100" ></app-button>
+    </mat-dialog-actions>
+</form>

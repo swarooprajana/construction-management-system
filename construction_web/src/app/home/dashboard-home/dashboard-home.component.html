@@ -1,4 +1,7 @@
-<div class="container">
+<app-spinner [isLoading]="isLoading">
+    DashBoard Loading, please wait...
+   </app-spinner>
+<div class="container" *ngIf="!isLoading">
     <div class="row m-10" >
         <div class="col-md-7">
             <mat-card class="w-100 p-10 jobsTable">
@@ -85,8 +88,8 @@
                             buttonIcon="add"
                             (buttonClick)="openSchoolForm()"
                             [showCheckboxes]="false"
-                            [paginationSizes]="[5,10]"
-                            [defaultPageSize]="10"
+                            [paginationSizes]="[5]"
+                            [defaultPageSize]="5"
                             (sort)="sortData($event)"
                             (rowAction)="handleRowAction($event)"
                             (rowClick)="onRowClicked($event)"

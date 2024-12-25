@@ -18,6 +18,7 @@ import { HttpResponse } from '@angular/common/http';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class AllJobsComponent {
+  isLoading=true;
   orders: EnterpriseGroup[] = [];
   ordersTableColumns: TableColumn[] = [];
   jobId: any;
@@ -33,7 +34,9 @@ export class AllJobsComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.initializeColumns();
     this.allJobs();
     

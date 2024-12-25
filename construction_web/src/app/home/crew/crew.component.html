@@ -1,4 +1,7 @@
-<div class="row">
+<app-spinner [isLoading]="isLoading">
+   My Crew Loading, please wait...
+  </app-spinner>
+<div class="row" *ngIf="!isLoading">
     <div class="col-md-12 m-10">
         <mat-card>
             <custom-table 
@@ -10,7 +13,7 @@
                             [showButton]="true"
                             buttonLabel="Add new Members"
                             buttonIcon="add"
-                            (buttonClick)="openSchoolForm()"
+                            (buttonClick)="openCrewForm()"
                             [showCheckboxes]="false"
                             [paginationSizes]="[5,10]"
                             [defaultPageSize]="10"
