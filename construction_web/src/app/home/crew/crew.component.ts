@@ -49,7 +49,7 @@ export class CrewComponent {
       { name: 'Name', dataKey: 'crewName', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
-      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+      { name: 'Actions', dataKey: 'actions', position: 'right', isSortable: false, displayAsIcon: true, customOptions: [
         { label: 'Edit', icon: 'edit', action: this.editOrder },
         { label: 'Delete', icon: 'delete', action: this.deleteOrder }
       ]

@@ -57,7 +57,6 @@
                         [showButton]="false"
                         buttonLabel="Add new Members"
                         buttonIcon="add"
-                        (buttonClick)="openSchoolForm()"
                         [showCheckboxes]="false"
                         [paginationSizes]="[5]"
                         [defaultPageSize]="5"
@@ -76,7 +75,7 @@
     <div class="row m-10">
         
             
-                <mat-card class="w-100">
+                <mat-card class="w-100 crewTable" >
                     <custom-table 
                         [tableData]="crewTable"
                             [heading]="'My Crew'"
@@ -86,7 +85,7 @@
                             [showButton]="true"
                             buttonLabel="Add new Members"
                             buttonIcon="add"
-                            (buttonClick)="openSchoolForm()"
+                            (buttonClick)="openCrewForm()"
                             [showCheckboxes]="false"
                             [paginationSizes]="[5]"
                             [defaultPageSize]="5"
