@@ -1,4 +1,7 @@
-<div class="row flex-center mt-40">
+<app-spinner [isLoading]="isLoading">
+  Profile Loading, please wait...
+ </app-spinner>
+<div class="row flex-center mt-40" *ngIf="!isLoading">
     <form [formGroup]="logForm" (ngSubmit)="onSubmit()" class="w-75">
         <div class="col-md-12 flex-center">
             <div class="image-upload-container">
@@ -21,8 +24,15 @@
                       class="avatar-image"
                     />
                     <ng-template #placeholder>
-                      <img src="../../assets/images/svgs/default-avatar.svg" alt="Default Avatar" class="avatar-image" />
-                    </ng-template>
+                        <div class="placeholder-image">
+                          <img src="https://png.pngtree.com/png-vector/20190307/ourmid/pngtree-vector-add-user-icon-png-image_762930.jpg" alt="Placeholder Image" class="placeholder-icon" />
+                        </div>
+                        <p>Add image</p>
+                      </ng-template>
+                  </div>
+                  <div class="hover-icon" *ngIf="uploadFileUrl">
+                    <mat-icon>insert_photo</mat-icon>
+                    <p>Change image</p> <!-- You can change this to any icon you prefer -->
                   </div>
                 </label>
               </div>

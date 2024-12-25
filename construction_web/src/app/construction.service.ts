@@ -135,4 +135,25 @@ getProfile(options: { observe: 'response' }): Observable<HttpResponse<any>>{
 getAllActiveCrew(){
   return this.http.get(`${this.url}crew/`, this.getRequestOptions())
 }
+updateCrewByCrewId(id:any,crewData:any,options: { observe: 'response' }): Observable<HttpResponse<any>> {
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.put<HttpResponse<any>>(`${this.url}crew/${id}/`,crewData, requestOptions);
+}
+postCrew(CreewObj:any,options: { observe: 'response' }): Observable<HttpResponse<any>>{
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.post<HttpResponse<any>>(`${this.url}crew/`,CreewObj, requestOptions);
+}
+deleteCrewById(id:any,options: { observe: 'response' }): Observable<HttpResponse<any>> {
+  const requestOptions = {
+    ...this.getRequestOptions(),
+    ...options, // Merge additional options
+  };
+  return this.http.delete<HttpResponse<any>>(`${this.url}crew/${id}/`,requestOptions);
+}
 }

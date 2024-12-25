@@ -10,6 +10,7 @@ import { Sort } from '@angular/material/sort';
 import { CreateJobComponent } from '../../popups/create-job/create-job.component';
 import { EditJobComponent } from '../../popups/edit-job/edit-job.component';
 import { HttpResponse } from '@angular/common/http';
+import { CrewDetailsComponent } from '../crew/crew-details/crew-details.component';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -24,7 +25,7 @@ export class DashboardHomeComponent {
   crewTableColumns: TableColumn[] = [];
   dialiesTable:dialiesTable[]=[];
   dialiesColumns: TableColumn[] = [];
-  
+  isLoading=true;
 
   crew: any;
   jobs: any;
@@ -42,7 +43,9 @@ export class DashboardHomeComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.initializeColumns();
     this.allJobs();
     this.initializeCrewColumns();
@@ -58,7 +61,7 @@ export class DashboardHomeComponent {
       { name: 'From', dataKey: 'startDate', position: 'left', isSortable: false,displayAsIcon: false,},
       { name: 'To', dataKey: 'endDate', position: 'left', isSortable: false,displayAsIcon: false,},
       { name: 'Status', dataKey: 'status', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+      { name: 'Actions', dataKey: 'actions', position: 'right', isSortable: true, displayAsIcon: true, customOptions: [
         { label: 'Edit', icon: 'edit', action: this.editOrder },
         { label: 'Delete', icon: 'delete', action: this.deleteOrder }
       ]
@@ -76,6 +79,11 @@ export class DashboardHomeComponent {
       { name: 'Name', dataKey: 'crewName', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Crew ID', dataKey: 'crewid', position: 'left', isSortable: false,displayAsIcon: false  },
       { name: 'Available', dataKey: 'crewavailable', position: 'left', isSortable: false,displayAsIcon: false  },
+      { name: 'Actions', dataKey: 'actions', position: 'right', isSortable: false, displayAsIcon: true, customOptions: [
+        { label: 'Edit', icon: 'edit', action: this.editOrder },
+        { label: 'Delete', icon: 'delete', action: this.deleteOrder }
+      ]
+    }
     ];
   }
   intializeDailiesColumns():void{
@@ -131,8 +139,21 @@ export class DashboardHomeComponent {
 
         });
   }
-  openSchoolForm(){
+  openCrewForm(){
+    const dialogRef =this.dialog.open(CrewDetailsComponent,{
+      data:{
+      rowData: null,
+      buttonLabel:"Post Crew"
+      },
+      width: '80%', // Set the width of the dialog
+      // Set the height of the dialog
+    }
     
+  )
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getAllCrewDashborad();
+    });
   }
   goBack() {
     // this.location.back();
@@ -219,15 +240,19 @@ export class DashboardHomeComponent {
           
           const crewavailable = item.is_available || '--';
           
+          const actions = [
+              
+            { label: 'Edit', icon: '', action: this.editOrder.bind(this, item) },
+            { label: 'Delete', icon: '', action: this.deleteOrder.bind(this, item) }
+          ];
          
 
           return {
             sno: index + 1,
             crewName,
             crewid,
-            
             crewavailable,
-            
+            actions,
             
           };
         });

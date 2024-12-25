@@ -18,6 +18,7 @@ import { HttpResponse } from '@angular/common/http';
   providers: [CurrencyPipe, DecimalPipe, PercentPipe]
 })
 export class AllJobsComponent {
+  isLoading=true;
   orders: EnterpriseGroup[] = [];
   ordersTableColumns: TableColumn[] = [];
   jobId: any;
@@ -33,7 +34,9 @@ export class AllJobsComponent {
       }
 }
   ngOnInit(): void {
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.initializeColumns();
     this.allJobs();
     
@@ -45,7 +48,7 @@ export class AllJobsComponent {
       { name: 'From', dataKey: 'startDate', position: 'left', isSortable: false,displayAsIcon: false,},
       { name: 'To', dataKey: 'endDate', position: 'left', isSortable: false,displayAsIcon: false,},
       { name: 'Status', dataKey: 'status', position: 'left', isSortable: false,displayAsIcon: false,},
-      { name: 'Actions', dataKey: 'actions', position: 'left', isSortable: true, displayAsIcon: true, customOptions: [
+      { name: 'Actions', dataKey: 'actions', position: 'right', isSortable: false, displayAsIcon: true, customOptions: [
         { label: 'Edit', icon: 'edit', action: this.editOrder },
         { label: 'Delete', icon: 'delete', action: this.deleteOrder }
       ]

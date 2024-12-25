@@ -16,6 +16,8 @@ export class CrewDetailsComponent {
   logForm!:FormGroup;
   loginErrorMessage: any;
   crewid: any;
+  crewData: any;
+  cId: any;
 
   constructor(private fb:FormBuilder,private router:Router,private snackBar: MatSnackBar,private constructionService:ConstructionService,public dialogRef: MatDialogRef<CrewDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,){
@@ -35,19 +37,7 @@ export class CrewDetailsComponent {
   ngOnInit() {
     this.logForm = this.fb.group({
       username: ['', [Validators.required]], // Wrap validators in an array
-      phone: ['', [Validators.required]],// Validators already wrapped correctly here
-      email:['', [Validators.required,Validators.email]],
-      password:['', [Validators.required]],
-      cpassword:['', [Validators.required]],
-      role:['', [Validators.required]],
-      description: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(500),
-        ],
-      ],
+      availability: [null, Validators.required],
     });
   }
   getEmailErrorMessage() {
@@ -61,7 +51,74 @@ export class CrewDetailsComponent {
     return '';
   }
   onSubmit(){
-
+    if(this.logForm.valid){
+      
+      const crewData = {
+        id:this.cId,
+        name:this.logForm.value.username,
+        crew_id:this.crewid,
+        is_available:this.logForm.value.availability,
+      };
+      const postCrew={
+        name:this.logForm.value.username,
+        is_available:this.logForm.value.availability,
+      }
+      console.log(crewData,"crewdetails",postCrew);
+      if(!this.cId){
+        this.constructionService.postCrew(postCrew, { observe: 'response' }).subscribe({
+          next: (response: HttpResponse<any>) => {
+            console.log("crewPost:", response);
+    
+            // Check if login is successful
+            if (
+              response.status === 201
+            ) {
+              this.snackBar.open('Crew created successfully!', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+              });
+              this.dialogRef.close();
+              
+            }
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            this.snackBar.open('Failed to create the Crew. Please try again.', 'Close', {
+              duration: 3000,
+              verticalPosition: 'top',
+            });
+          },
+        });
+      }else{
+        this.constructionService.updateCrewByCrewId(this.crewid,crewData,{ observe: 'response' }).subscribe({
+          next: (response: HttpResponse<any>) => {
+            console.log("crew update:", response);
+    
+            // Check if login is successful
+            if (
+              response.status === 200               
+            ) {
+              this.snackBar.open('Crew Updated successfully!', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+              });
+              this.dialogRef.close();
+              }
+            }
+          })
+      }
+      // Call the API
+      
+    } else {
+      this.logForm.markAllAsTouched();
+      this.snackBar.open('Please fill in all required fields.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'],
+      });
+    }
+  
   }
  
   handleFileUpload(file: File) {
@@ -73,19 +130,12 @@ export class CrewDetailsComponent {
       (response: HttpResponse<any>) => {
         if (response.status === 200 && response.ok) {
           // Save the response body (job details)
-          const crewData = response.body;
-          console.log("crewdata", crewData);
-          // this.jobCustomer=jobData.customer;
-          // this.jobSupervisior=jobData.supervisor_name;
-          // this.startDate=jobData.start_date;
-          // this.endDate=jobData.end_date;
-          // this.jobWorkDone=jobData.work_done_percentage;
-          // this.jobOrderId=jobData.job_order_id;
-          // this.jobType=jobData.job_type;
+          this.crewData = response.body;
+          console.log("crewdata", this.crewData);
+          this.cId=this.crewData.id;
           this.logForm.patchValue({
-            username:crewData.name,
-            // workType:jobData.job_type,
-            // description: jobData.note,
+            username:this.crewData.name,
+            availability:this.crewData.is_available,  
           });
           // // Example: Save to a variable (adjust as needed)
           // this.savedJobData = jobData; // Make sure `savedJobData` is defined in the class

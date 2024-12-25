@@ -57,12 +57,14 @@ $breakpoint-xl: 1200px;
       flex: 0 0 #{math.div(100%, 12) * $i};
       max-width: #{math.div(100%, 12) * $i};
     }
+    
   }
   @media (min-width: $breakpoint-md) {
     .col-md-#{$i} {
       flex: 0 0 #{math.div(100%, 12) * $i};
       max-width: #{math.div(100%, 12) * $i};
     }
+   
   }
   @media (min-width: $breakpoint-lg) {
     .col-lg-#{$i} {

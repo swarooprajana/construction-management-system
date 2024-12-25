@@ -7,3 +7,13 @@ mat-card {
     max-height: 550px;
 }
   
+@media (max-width: 768px){
+    .jobsTable{
+        max-height: 550px;
+        overflow: scroll;
+    }
+    .crewTable{
+        max-height: 550px;
+        overflow: scroll;
+    }
+}

@@ -72,3 +72,7 @@ div.vertical-line.left {
   top: 0;
   z-index: 1; /* Ensure the header stays above the table body */
 }
+.mat-sort-header-container{
+  float: right !important;
+}
+

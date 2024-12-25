@@ -9,3 +9,9 @@
 mat-card{
     border-radius: 25px !important;
 }
+
+@media(max-width:768px){
+    mat-card{
+        overflow: scroll;
+    }
+}

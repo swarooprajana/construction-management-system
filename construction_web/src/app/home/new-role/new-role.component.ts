@@ -13,11 +13,14 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 export class NewRoleComponent {
   logForm!:FormGroup;
   loginErrorMessage: any;
-
+  isLoading=true;
   constructor(private fb:FormBuilder,private router:Router,private snackBar: MatSnackBar,private constructionService:ConstructionService){
 
   }
   ngOnInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.logForm = this.fb.group({
       username: ['', [Validators.required]], // Wrap validators in an array
       phone: ['', [Validators.required]],// Validators already wrapped correctly here

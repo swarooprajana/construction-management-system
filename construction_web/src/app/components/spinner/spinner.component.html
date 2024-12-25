@@ -1,0 +1,12 @@
+<div class="spinner-overlay" *ngIf="isLoading">
+    <div class="spinner-container">
+      <!-- Spinner -->
+      <div class="spinner"></div>
+  
+      <!-- Slot for projected content -->
+      <div class="spinner-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+  

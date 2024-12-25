@@ -9,6 +9,7 @@ import { HttpResponse } from '@angular/common/http';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
+  isLoading=true;
   uploadFileUrl: any;
   uploadFile: any;
   logForm!:FormGroup
@@ -17,6 +18,9 @@ export class ProfileComponent {
 
   }
   ngOnInit(){
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.logForm = this.fb.group({
       name: ['', [Validators.required]], 
       designation: ['', [Validators.required]],
